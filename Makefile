@@ -77,6 +77,14 @@ upload: clean ## Build and upload artefacts to the GitHub release.
 	TARGET_BIN=build/bin/compliance-operator-$(subst :,/,$*) \
 	GOARCH=$(subst :,/,$*) GOOS=linux \
 		$(MAKE) build
+	
+	@echo "Checking if release $(TAG) exists..."
+	@if ! gh release view "$(TAG)" > /dev/null 2>&1; then \
+		echo "Creating release $(TAG)"; \
+		gh release create "$(TAG)" --title "$(TAG)" --notes "Release $(TAG)"; \
+	else \
+		echo "Release $(TAG) already exists"; \
+	fi
 
 	TAG=$(TAG) \
 		./hack/upload-gh $(subst :,/,$*)
