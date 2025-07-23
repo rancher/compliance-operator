@@ -22,10 +22,7 @@ The current branch strategy for `rancher/compliance-operator` is laid out below:
 | Branch                | Tag      |Security-Scan          | Rancher                   |
 |-----------------------|----------|-----------------------|---------------------------|
 | `main`                | `head`   |`main` branch (`head`)`| `main` branch (`head`)    |
-| `release/v1.3`        | `v1.3.x` |`v0.5.x`               | `v2.10.x`                 |
-| `release/v1.2`        | `v1.2.x` |`v0.4.x`               | `v2.9.x`                  |
-| `release/v1.1`        | `v1.1.x` |`v0.3.x`               | `v2.8.x`                  |
-| `master` (deprecated) | `v1.0.x` |`v0.2.x`               | `v2.7.x`,`v2.8.x`,`v2.9.x`|
+| `release/v1.0`        | `v1.0.x` |`v0.7.x`               | `v2.12.x`                 |
 
 Note that it aligns with Rancher Manager releases to maximize compatibility
 within the ecosystem. This includes k8s dependencies that the Rancher release
