@@ -5,10 +5,10 @@
 image:
   operator:
     repository: rancher/compliance-operator
-    tag: v1.0.0
+    tag: v1.2.0-rc.2
   securityScan:
     repository: rancher/security-scan
-    tag: v0.7.0
+    tag: v0.7.2-rc.3
   sonobuoy:
     repository: rancher/mirrored-sonobuoy-sonobuoy
     tag: v0.57.3
@@ -45,7 +45,7 @@ global:
     clusterName: ""
   kubectl:
     repository: rancher/kubectl
-    tag: v1.33.1
+    tag: v1.34.1
 
 alerts:
   enabled: false
