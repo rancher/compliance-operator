@@ -11,7 +11,7 @@ require (
 	github.com/prometheus/client_golang v1.23.2
 	github.com/rancher/kubernetes-provider-detector v0.1.5
 	github.com/rancher/lasso v0.2.5
-	github.com/rancher/security-scan v0.7.1
+	github.com/rancher/security-scan v0.7.3
 	github.com/rancher/wrangler/v3 v3.3.1
 	github.com/robfig/cron v1.2.0
 	github.com/sirupsen/logrus v1.9.3
@@ -24,10 +24,10 @@ require (
 )
 
 require (
-	github.com/aquasecurity/kube-bench v0.11.1 // indirect
-	github.com/aws/aws-sdk-go-v2 v1.36.4 // indirect
-	github.com/aws/aws-sdk-go-v2/service/securityhub v1.57.5 // indirect
-	github.com/aws/smithy-go v1.22.2 // indirect
+	github.com/aquasecurity/kube-bench v0.13.0 // indirect
+	github.com/aws/aws-sdk-go-v2 v1.39.2 // indirect
+	github.com/aws/aws-sdk-go-v2/service/securityhub v1.64.2 // indirect
+	github.com/aws/smithy-go v1.23.0 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
 	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc // indirect
@@ -70,7 +70,6 @@ require (
 	go.uber.org/multierr v1.11.0 // indirect
 	go.yaml.in/yaml/v2 v2.4.3 // indirect
 	go.yaml.in/yaml/v3 v3.0.4 // indirect
-	golang.org/x/exp v0.0.0-20241108190413-2d47ceb2692f // indirect
 	golang.org/x/mod v0.28.0 // indirect
 	golang.org/x/net v0.44.0 // indirect
 	golang.org/x/oauth2 v0.30.0 // indirect
