@@ -15,7 +15,7 @@ require (
 	github.com/rancher/wrangler/v3 v3.3.1
 	github.com/robfig/cron v1.2.0
 	github.com/sirupsen/logrus v1.9.3
-	github.com/urfave/cli/v3 v3.4.1
+	github.com/urfave/cli/v3 v3.5.0
 	golang.org/x/crypto/x509roots/fallback v0.0.0-20251009181029-0b7aa0cfb07b
 	k8s.io/api v0.34.1
 	k8s.io/apiextensions-apiserver v0.34.1
