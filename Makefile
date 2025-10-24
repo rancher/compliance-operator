@@ -77,6 +77,9 @@ upload: clean ## Build and upload artefacts to the GitHub release.
 	TARGET_BIN=build/bin/compliance-operator-$(subst :,/,$*) \
 	GOARCH=$(subst :,/,$*) GOOS=linux \
 		$(MAKE) build
+	
+	@echo "Uploading assets for release $(TAG)..."
+	@gh release upload "$(TAG)" path/to/your/assets/* --clobber
 
 	TAG=$(TAG) \
 		./hack/upload-gh $(subst :,/,$*)
