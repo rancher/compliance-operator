@@ -34,13 +34,13 @@ function pull_image() {
 }
 
 function dump_logs() {
-  ${KUBECTL} get pods -n rancher-compliance-system --show-labels
+  ${KUBECTL} get pods -n compliance-operator-system --show-labels
   echo "RUNNER LOGS:"
-  ${KUBECTL} logs -n rancher-compliance-system -l app.kubernetes.io/instance=security-scan-runner-k3s-e2e-scan || true
+  ${KUBECTL} logs -n compliance-operator-system -l app.kubernetes.io/instance=security-scan-runner-k3s-e2e-scan || true
   echo "SONOBUOY LOGS (rancher-kube-bench):"
-  ${KUBECTL} logs -n rancher-compliance-system -l component=sonobuoy -c rancher-kube-bench || true
+  ${KUBECTL} logs -n compliance-operator-system -l component=sonobuoy -c rancher-kube-bench || true
   echo "SONOBUOY LOGS (sonobuoy-worker):"
-  ${KUBECTL} logs -n rancher-compliance-system -l component=sonobuoy -c sonobuoy-worker || true    
+  ${KUBECTL} logs -n compliance-operator-system -l component=sonobuoy -c sonobuoy-worker || true    
 }
 
 echo "Running E2E tests"
@@ -72,7 +72,7 @@ ${KUBECTL} wait --timeout=60s --for=condition=ready -n kube-system pod -l k8s-ap
 echo "> Deploying compliance-operator"
 ${KUBECTL} apply -f ./crds
 
-${HELM} install --create-namespace --namespace rancher-compliance-system \
+${HELM} install --create-namespace --namespace compliance-operator-system \
   --set "image.operator.repository=${IMAGE%%:*}" \
   --set "image.operator.tag=${IMAGE#*:}" \
   --set "debug=true" \
@@ -82,7 +82,7 @@ echo "> Wait for compliance-operator to be ready"
 # Can't kubectl wait before the deployment schedules the pod, so
 # wait 10 seconds for that to happen first.
 sleep 10
-${KUBECTL} wait --for=condition=ready -n rancher-compliance-system pod -l compliance.cattle.io/operator=compliance-operator --timeout=30s
+${KUBECTL} wait --for=condition=ready -n compliance-operator-system pod -l compliance.cattle.io/operator=compliance-operator --timeout=30s
 
 echo "> Create ClusterScan"
 ${KUBECTL} apply -f tests/k3s-bench-test.yaml

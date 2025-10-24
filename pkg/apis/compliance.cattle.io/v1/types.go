@@ -13,7 +13,7 @@ const (
 	ClusterProviderAKS = "aks"
 	ClusterProviderK3s = "k3s"
 
-	ClusterScanNS                      = "rancher-compliance-system"
+	ClusterScanNS                      = "compliance-operator-system"
 	ClusterScanSA                      = "compliance-scan-serviceaccount"
 	ClusterScanConfigMap               = "compliance-config-cm"
 	ClusterScanPluginsConfigMap        = "compliance-plugins-cm"

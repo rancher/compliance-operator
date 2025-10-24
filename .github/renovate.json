@@ -3,16 +3,20 @@
   "extends": [
     "github>rancher/renovate-config//rancher-main#release"
   ],
-  "baseBranches": [
+  "baseBranchPatterns": [
     "main"
   ],
-  "ignoreDeps":[
+  "ignoreDeps": [
     "github.com/rancher/lasso"
   ],
   "packageRules": [
     {
-      "matchBaseBranches": ["release/v0.1"],
-      "extends": ["github>rancher/renovate-config//rancher-2.11#release"]
+      "matchBaseBranches": [
+        "release/v1.0"
+      ],
+      "extends": [
+        "github>rancher/renovate-config//rancher-2.11#release"
+      ]
     }
   ],
   "vulnerabilityAlerts": {
