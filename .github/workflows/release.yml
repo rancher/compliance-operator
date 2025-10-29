@@ -46,7 +46,7 @@ jobs:
           secret/data/github/repo/${{ github.repository }}/rancher-prime-registry/credentials password | PRIME_REGISTRY_PASSWORD
 
     - name: Publish manifest
-      uses: rancher/ecm-distro-tools/actions/publish-image@master
+      uses: ./.github/actions//publish-image
       with:
         image: compliance-operator
         tag: ${{ github.ref_name }}${{ matrix.tag-suffix }}

@@ -1,0 +1,206 @@
+name: publish-image
+
+inputs:
+  image:
+    description: |
+      The image name component in a fully qualified image. For reference:
+      <registry>/<repo>/<image>:<tag>.
+    required: true
+    type: string
+
+  tag:
+    description: |
+      The tag used for the image to be published. Most often its value
+      will be either github.ref_name or that with an architecture
+      specific suffix.
+    required: true
+    type: string
+
+  identity-registry:
+    description: |
+      The registry used as the identity in the signed image. Most often its
+      value will be the prime registry or any final target registry. This
+      option can be used when pushing a signed image to a staging registry
+      before pushing to the prime registry.
+    type: string
+
+  platforms:
+    description: |
+      The Docker buildx platforms for the images to target.
+    type: string
+    default: linux/amd64,linux/arm64
+
+  push-to-public:
+    description: |
+      Indicates whether the image should be pushed to the Public container
+      registry.
+    default: true
+    type: boolean
+  
+  public-registry:
+    description: The container registry used for Public images.
+    type: string
+    default: docker.io
+
+  public-repo:
+    description: |
+      The repository component in a fully qualified image. For reference:
+      <public-registry>/<public-repo>/<image>:<tag>.
+    type: string
+
+  public-username:
+    description: |
+      The username used to authenticate against the Public registry.
+    type: string
+
+  public-password:
+    description: |
+      The password used to authenticate against the Public registry.
+    type: string
+
+  push-to-prime:
+    description: |
+      Indicates whether the image should be pushed to the Prime container
+      registry.
+    default: true
+    type: boolean
+
+  prime-registry:
+    description: The container registry used for Prime images.
+    type: string
+
+  prime-repo:
+    description: |
+      The repository component in a fully qualified image. For reference:
+      <prime-registry>/<prime-repo>/<image>:<tag>.
+    type: string
+
+  prime-username:
+    description: |
+      The username used to authenticate against the Prime registry.
+    type: string
+
+  prime-password:
+    description: |
+      The password used to authenticate against the Prime registry.
+    type: string
+
+  make-target:
+    description: |
+      The make target used to build and push the container image.
+    default: push-image
+    type: string
+
+runs:
+  using: composite
+
+  steps:
+  - name: Validate Prime Registry
+    shell: bash
+    if: ${{ inputs.push-to-prime == true || inputs.push-to-prime == 'true' }}
+    run: |
+      export GITHUB_REPOSITORY=${{ github.repository }}
+      GITHUB_REPOSITORY="${GITHUB_REPOSITORY#*/}" # trim the owner
+
+      if [[ -z "${REGISTRY}" ]]; then
+        echo "Prime registry cannot be empty"
+        exit 1
+      fi
+
+      if [[ "${REGISTRY}" == "docker.io" ]] && [[ "${GITHUB_REPOSITORY}" != "ecm-distro-tools" ]]; then
+        echo "Prime registry cannot be docker.io"
+        exit 2
+      fi
+    env:
+      REGISTRY: ${{ inputs.prime-registry }}
+
+  # Login to all registries before starting the pushing process.
+  # Short-circuit if either fails. This should decrease the likelihood
+  # of only one registry getting updated while the other fails.
+  - name: Login to registry [Public]
+    if: ${{ inputs.push-to-public == true || inputs.push-to-public == 'true' }}
+    uses: docker/login-action@5e57cd118135c172c3672efd75eb46360885c0ef # v3.6.0
+    with:
+      registry: ${{ inputs.public-registry }}
+      username: ${{ inputs.public-username }}
+      password: ${{ inputs.public-password }}
+
+  - name: Login to registry [Prime]
+    if: ${{ inputs.push-to-prime == true || inputs.push-to-prime == 'true' }}
+    uses: docker/login-action@5e57cd118135c172c3672efd75eb46360885c0ef # v3.6.0
+    with:
+      registry: ${{ inputs.prime-registry }}
+      username: ${{ inputs.prime-username }}
+      password: ${{ inputs.prime-password }}
+
+  - name: Setup QEMU
+    uses: docker/setup-qemu-action@29109295f81e9208d7d86ff1c6c12d2833863392 # v3.6.0
+    with:
+      image: tonistiigi/binfmt:qemu-v10.0.4
+      cache-image: false
+  - name: Setup Docker Buildx
+    uses: docker/setup-buildx-action@e468171a9de216ec08956ac3ada2f0791b6bd435 # v3.11.1
+  - name: Install Cosign
+    uses: sigstore/cosign-installer@7e8b541eb2e61bf99390e1afd4be13a184e9ebc5 # v3.10.1
+  - uses: rancherlabs/slsactl/actions/install-slsactl@c5e097631982f01c5554a034329f21f37381630c # before v0.0.22
+
+  - name: Build and push image [Prime]
+    shell: bash
+    if: ${{ inputs.push-to-prime == true || inputs.push-to-prime == 'true' }}
+    run: |
+      export IID_FILE=$(mktemp)
+      export IID_FILE_FLAG="--iidfile ${IID_FILE}"
+      
+      make ${{ inputs.make-target }}
+      IMG_NAME="${REPO}/${{ inputs.image }}@$(head -n 1 ${IID_FILE})"
+
+      IDENTITY_REGISTRY=${IDENTITY_REGISTRY:-"$REGISTRY"}
+      IDENTITY="$IDENTITY_REGISTRY/${{ inputs.prime-repo }}/${{ inputs.image }}"
+
+      cosign sign \
+        --oidc-provider=github-actions \
+        --yes \
+        --sign-container-identity="$IDENTITY" \
+        "${IMG_NAME}"
+      echo "IMG_NAME=${IMG_NAME}" >> "${GITHUB_ENV}"
+        
+    env:
+      IDENTITY_REGISTRY: ${{ inputs.identity-registry }}
+      TAG: ${{ inputs.tag }}
+      TARGET_PLATFORMS: ${{ inputs.platforms }}
+      REPO: ${{ inputs.prime-registry }}/${{ inputs.prime-repo }}
+      REGISTRY: ${{ inputs.prime-registry }}
+
+  - name: Build and push image [Public]
+    shell: bash
+    if: ${{ inputs.push-to-public == true || inputs.push-to-public == 'true' }}
+    run: |
+      make ${{ inputs.make-target }}
+    env:
+      TAG: ${{ inputs.tag }}
+      TARGET_PLATFORMS: ${{ inputs.platforms }}
+      REPO: ${{ inputs.public-registry }}/${{ inputs.public-repo }}
+
+  - name: Attest provenance
+    shell: bash
+    if: ${{ inputs.push-to-prime == true || inputs.push-to-prime == 'true' }}
+    run: |
+      max_retries=3
+      retry_delay=5
+      i=0
+
+      while [ "${i}" -lt "${max_retries}" ]; do
+          if slsactl download provenance --format=slsav1 "${IMG_NAME}" > provenance-slsav1.json; then
+              break
+          fi
+          if [ "${i}" -eq "$(( max_retries - 1 ))" ]; then
+              echo "ERROR: Failed to generate slsav1 provenance. Check whether the image is present in the Prime registry."
+              cat provenance-slsav1.json
+              exit 1
+          fi
+          i=$(( i + 1 ))
+          sleep "${retry_delay}"
+      done
+
+      cat provenance-slsav1.json
+      cosign attest --yes --predicate provenance-slsav1.json --type slsaprovenance1 "${IMG_NAME}"
