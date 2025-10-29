@@ -157,7 +157,7 @@ runs:
       IDENTITY_REGISTRY=${IDENTITY_REGISTRY:-"$REGISTRY"}
       IDENTITY="$IDENTITY_REGISTRY/${{ inputs.prime-repo }}/${{ inputs.image }}"
 
-      cosign sign \
+      cosign sign --verbose \
         --oidc-provider=github-actions \
         --yes \
         --sign-container-identity="$IDENTITY" \
