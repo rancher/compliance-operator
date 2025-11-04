@@ -1,8 +1,6 @@
 module github.com/rancher/compliance-operator
 
-go 1.24.4
-
-toolchain go1.24.5
+go 1.24.9
 
 require (
 	github.com/blang/semver v3.5.1+incompatible
@@ -11,7 +9,7 @@ require (
 	github.com/prometheus/client_golang v1.22.0
 	github.com/rancher/kubernetes-provider-detector v0.1.5
 	github.com/rancher/lasso v0.2.3
-	github.com/rancher/security-scan v0.7.3
+	github.com/rancher/security-scan v0.7.4-rc.1
 	github.com/rancher/wrangler/v3 v3.2.2
 	github.com/robfig/cron v1.2.0
 	github.com/sirupsen/logrus v1.9.3
