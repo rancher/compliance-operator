@@ -2,6 +2,10 @@ module github.com/rancher/compliance-operator
 
 go 1.24.9
 
+// Some older dependencies (e.g. legacy Rancher or Kubernetes libraries) still
+// reference the pre-2020 monolithic genproto module, which causes ambiguous
+// import errors when mixed with modern split submodules (googleapis/api, rpc, etc).
+// This replace ensures all genproto imports resolve consistently to the latest version.
 replace google.golang.org/genproto => google.golang.org/genproto v0.0.0-20250303144028-a0af3efb3deb
 
 require (
