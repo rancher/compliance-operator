@@ -2,12 +2,6 @@ module github.com/rancher/compliance-operator
 
 go 1.24.9
 
-// Some older dependencies (e.g. legacy Rancher or Kubernetes libraries) still
-// reference the pre-2020 monolithic genproto module, which causes ambiguous
-// import errors when mixed with modern split submodules (googleapis/api, rpc, etc).
-// This replace ensures all genproto imports resolve consistently to the latest version.
-replace google.golang.org/genproto => google.golang.org/genproto v0.0.0-20250303144028-a0af3efb3deb
-
 require (
 	github.com/blang/semver v3.5.1+incompatible
 	github.com/prometheus-operator/prometheus-operator/pkg/apis/monitoring v0.86.1
@@ -83,6 +77,8 @@ require (
 	golang.org/x/time v0.12.0 // indirect
 	golang.org/x/tools v0.37.0 // indirect
 	golang.org/x/tools/go/expect v0.1.0-deprecated // indirect
+	google.golang.org/genproto/googleapis/api v0.0.0-20250303144028-a0af3efb3deb // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20250303144028-a0af3efb3deb // indirect
 	google.golang.org/protobuf v1.36.8 // indirect
 	gopkg.in/evanphx/json-patch.v4 v4.12.0 // indirect
 	gopkg.in/inf.v0 v0.9.1 // indirect
