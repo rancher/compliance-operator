@@ -17,7 +17,7 @@ require (
 	golang.org/x/crypto/x509roots/fallback v0.0.0-20251028130051-c0531f9c3451
 	k8s.io/api v0.34.1
 	k8s.io/apiextensions-apiserver v0.34.1
-	k8s.io/apimachinery v0.34.1
+	k8s.io/apimachinery v0.34.2
 	k8s.io/client-go v0.34.1
 )
 
