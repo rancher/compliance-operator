@@ -15,10 +15,10 @@ require (
 	github.com/sirupsen/logrus v1.9.3
 	github.com/urfave/cli/v3 v3.5.0
 	golang.org/x/crypto/x509roots/fallback v0.0.0-20251028130051-c0531f9c3451
-	k8s.io/api v0.34.1
-	k8s.io/apiextensions-apiserver v0.34.1
+	k8s.io/api v0.34.2
+	k8s.io/apiextensions-apiserver v0.34.2
 	k8s.io/apimachinery v0.34.2
-	k8s.io/client-go v0.34.1
+	k8s.io/client-go v0.34.2
 )
 
 require (
@@ -84,7 +84,7 @@ require (
 	gopkg.in/inf.v0 v0.9.1 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
-	k8s.io/code-generator v0.34.1 // indirect
+	k8s.io/code-generator v0.34.2 // indirect
 	k8s.io/gengo v0.0.0-20250130153323-76c5745d3511 // indirect
 	k8s.io/gengo/v2 v2.0.0-20250604051438-85fd79dbfd9f // indirect
 	k8s.io/klog/v2 v2.130.1 // indirect
