@@ -12,7 +12,7 @@ require (
 	github.com/rancher/security-scan v0.8.1
 	github.com/rancher/wrangler/v3 v3.3.1
 	github.com/robfig/cron v1.2.0
-	github.com/sirupsen/logrus v1.9.3
+	github.com/sirupsen/logrus v1.9.4
 	github.com/urfave/cli/v3 v3.6.2
 	golang.org/x/crypto/x509roots/fallback v0.0.0-20251210140736-7dacc380ba00
 	k8s.io/api v0.34.3
