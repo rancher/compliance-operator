@@ -5,4 +5,4 @@ K3D_VERSION = v5.8.3
 # renovate: datasource=github-releases packageName=kubernetes/kubernetes
 KUBECTL_VERSION = 1.35.1
 # renovate: datasource=github-release-attachments depName=helm/helm
-HELM_VERSION = v4.1.0
+HELM_VERSION = v4.1.1
