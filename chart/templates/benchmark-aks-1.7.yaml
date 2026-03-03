@@ -5,4 +5,4 @@ metadata:
   name: aks-1.7
 spec:
   clusterProvider: aks
-  minKubernetesVersion: "1.31.0"
+  minKubernetesVersion: "1.29.0"
