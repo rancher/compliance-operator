@@ -13,7 +13,7 @@ require (
 	github.com/rancher/wrangler/v3 v3.4.0
 	github.com/robfig/cron v1.2.0
 	github.com/sirupsen/logrus v1.9.4
-	github.com/urfave/cli/v3 v3.6.2
+	github.com/urfave/cli/v3 v3.7.0
 	golang.org/x/crypto/x509roots/fallback v0.0.0-20260213171211-a408498e5541
 	k8s.io/api v0.35.2
 	k8s.io/apiextensions-apiserver v0.35.2
