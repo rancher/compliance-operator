@@ -62,6 +62,9 @@ data:
       - hostPath:
           path: /var/lib/kubelet
         name: var-kubelet
+      - hostPath:
+          path: /etc/kubernetes/azure.json
+        name: etc-kubernetes
       {{- if .isCustomBenchmark }}
       - configMap:
           defaultMode: 420
@@ -145,6 +148,9 @@ data:
         readOnly: true
       - mountPath: /var/lib/kubelet
         name: var-kubelet
+        readOnly: true
+      - mountPath: /etc/kubernetes/azure.json
+        name: etc-kubernetes
         readOnly: true
       {{- if .isCustomBenchmark }}
       - mountPath: /etc/kbs/custombenchmark/cfg
