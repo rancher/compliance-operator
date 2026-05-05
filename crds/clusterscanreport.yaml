@@ -32,6 +32,9 @@ spec:
               reportJSON:
                 nullable: true
                 type: string
+              reportXCCDF:
+                nullable: true
+                type: string
             type: object
         type: object
     served: true

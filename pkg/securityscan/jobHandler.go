@@ -7,6 +7,7 @@ import (
 
 	"github.com/sirupsen/logrus"
 	batchv1 "k8s.io/api/batch/v1"
+	corev1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/labels"
@@ -19,6 +20,7 @@ import (
 
 	operatorapi "github.com/rancher/compliance-operator/pkg/apis/compliance.cattle.io"
 	v1 "github.com/rancher/compliance-operator/pkg/apis/compliance.cattle.io/v1"
+	"github.com/rancher/compliance-operator/pkg/xccdf"
 	"github.com/rancher/wrangler/v3/pkg/name"
 )
 
@@ -93,6 +95,27 @@ func (c *Controller) handleJobs(ctx context.Context) error {
 			}
 			c.currentScanName = ""
 			return obj, nil
+		}
+
+		// If the job itself has failed (e.g. ActiveDeadlineSeconds exceeded) and the scan
+		// hasn't been updated yet, mark it failed so it doesn't stall in running forever.
+		if !v1.ClusterScanConditionRunCompleted.IsTrue(scan) {
+			for _, cond := range obj.Status.Conditions {
+				if cond.Type == batchv1.JobFailed && cond.Status == corev1.ConditionTrue {
+					scanCopy := scan.DeepCopy()
+					v1.ClusterScanConditionRunCompleted.True(scanCopy)
+					v1.ClusterScanConditionFailed.True(scanCopy)
+					v1.ClusterScanConditionFailed.Message(scanCopy, fmt.Sprintf("Scan job failed: %s", cond.Message))
+					c.setClusterScanStatusDisplay(scanCopy)
+					_, err = scans.UpdateStatus(scanCopy)
+					if err != nil {
+						return nil, fmt.Errorf("error updating scan status for failed job %v: %v", obj.Name, err)
+					}
+					logrus.Infof("Marking scan %v as failed due to job failure: %v", scanName, cond.Message)
+					jobs.Enqueue(obj.Namespace, obj.Name)
+					return obj, nil
+				}
+			}
 		}
 
 		if v1.ClusterScanConditionRunCompleted.IsTrue(scan) {
@@ -171,6 +194,7 @@ func (c *Controller) getScanSummary(outputBytes []byte) (*v1.ClusterScanSummary,
 	return scanSummary, nil
 }
 
+
 func (c *Controller) createClusterScanReport(ctx context.Context, outputBytes []byte, scan *v1.ClusterScan) (*v1.ClusterScanReport, error) {
 	scanReport := &v1.ClusterScanReport{
 		ObjectMeta: metav1.ObjectMeta{
@@ -189,6 +213,89 @@ func (c *Controller) createClusterScanReport(ctx context.Context, outputBytes []
 		return nil, fmt.Errorf("Error %w loading scan report json bytes", err)
 	}
 	scanReport.Spec.ReportJSON = string(data[:])
+
+	if scan.Spec.OutputFormat == v1.OutputFormatXCCDF {
+		benchmark, err := c.getClusterScanBenchmark(profile)
+		if err != nil {
+			return nil, fmt.Errorf("Error %w loading ClusterScanBenchmark for XCCDF report", err)
+		}
+		stigChecks := make(map[string]xccdf.StigCheckMetadata, len(benchmark.Spec.StigChecks))
+		for k, v := range benchmark.Spec.StigChecks {
+			stigChecks[k] = xccdf.StigCheckMetadata{
+				RuleID:   v.RuleID,
+				Version:  v.Version,
+				Severity: v.Severity,
+				FixID:    v.FixID,
+				CheckID:  v.CheckID,
+				CCI:      v.CCI,
+			}
+		}
+		clusterName := scan.Spec.ClusterName
+		if clusterName == "" {
+			clusterName = benchmark.Spec.BenchmarkMetadata.ClusterName
+		}
+		meta := xccdf.BenchmarkMetadata{
+			ClusterName:         clusterName,
+			BenchmarkID:         benchmark.Spec.BenchmarkMetadata.BenchmarkID,
+			Title:               benchmark.Spec.BenchmarkMetadata.Title,
+			Creator:             benchmark.Spec.BenchmarkMetadata.Creator,
+			Publisher:           benchmark.Spec.BenchmarkMetadata.Publisher,
+			Contributor:         benchmark.Spec.BenchmarkMetadata.Contributor,
+			Source:              benchmark.Spec.BenchmarkMetadata.Source,
+			Description:         benchmark.Spec.BenchmarkMetadata.Description,
+			NoticeID:            benchmark.Spec.BenchmarkMetadata.NoticeID,
+			Notice:              benchmark.Spec.BenchmarkMetadata.Notice,
+			FrontMatter:         benchmark.Spec.BenchmarkMetadata.FrontMatter,
+			RearMatter:          benchmark.Spec.BenchmarkMetadata.RearMatter,
+			ReferenceHref:       benchmark.Spec.BenchmarkMetadata.ReferenceHref,
+			PlainTextID:         benchmark.Spec.BenchmarkMetadata.PlainTextID,
+			PlainText:           benchmark.Spec.BenchmarkMetadata.PlainText,
+			Platform:            benchmark.Spec.BenchmarkMetadata.Platform,
+			ReferenceTitle:      benchmark.Spec.BenchmarkMetadata.ReferenceTitle,
+			ReferenceType:       benchmark.Spec.BenchmarkMetadata.ReferenceType,
+			ReferenceSubject:    benchmark.Spec.BenchmarkMetadata.ReferenceSubject,
+			ReferenceIdentifier: benchmark.Spec.BenchmarkMetadata.ReferenceIdentifier,
+			CheckHref:           benchmark.Spec.BenchmarkMetadata.CheckHref,
+			CheckName:           benchmark.Spec.BenchmarkMetadata.CheckName,
+			StigChecks:          stigChecks,
+		}
+		nodes, err := c.kcs.CoreV1().Nodes().List(ctx, metav1.ListOptions{})
+		if err != nil {
+			logrus.Warnf("failed to list nodes for XCCDF target facts: %v", err)
+		} else {
+			for _, node := range nodes.Items {
+				for _, addr := range node.Status.Addresses {
+					switch addr.Type {
+					case corev1.NodeInternalIP:
+						meta.TargetAddresses = append(meta.TargetAddresses, addr.Address)
+						meta.TargetFacts = append(meta.TargetFacts, xccdf.Fact{
+							Name:  "urn:xccdf:fact:asset:identifier:ipv4",
+							Type:  "string",
+							Value: addr.Address,
+						})
+					case corev1.NodeHostName:
+						meta.TargetFacts = append(meta.TargetFacts, xccdf.Fact{
+							Name:  "urn:xccdf:fact:asset:identifier:host_name",
+							Type:  "string",
+							Value: addr.Address,
+						})
+					}
+				}
+			}
+			if c.KubernetesVersion != "" {
+				meta.TargetFacts = append(meta.TargetFacts, xccdf.Fact{
+					Name:  "urn:xccdf:fact:asset:identifier:kubernetes-version",
+					Type:  "string",
+					Value: c.KubernetesVersion,
+				})
+			}
+		}
+		xccdfBytes, err := xccdf.FromJSON(outputBytes, profile.Spec.BenchmarkVersion, meta)
+		if err != nil {
+			return nil, fmt.Errorf("Error %w generating XCCDF report", err)
+		}
+		scanReport.Spec.ReportXCCDF = string(xccdfBytes)
+	}
 
 	ownerRef := metav1.OwnerReference{
 		APIVersion: "compliance.cattle.io/v1",
@@ -250,3 +357,4 @@ func (c *Controller) ensureCleanup(scan *v1.ClusterScan) error {
 
 	return err
 }
+
