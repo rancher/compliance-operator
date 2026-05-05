@@ -68,10 +68,11 @@ type Controller struct {
 	daemonsets                 appsctlv1.DaemonSetController
 	daemonsetCache             appsctlv1.DaemonSetCache
 	securityScanJobTolerations []corev1.Toleration
+	customScanHostPaths        []string
 }
 
 func NewController(ctx context.Context, cfg *rest.Config, namespace, name string,
-	imgConfig *operatorapiv1.ScanImageConfig, securityScanJobTolerations []corev1.Toleration) (ctl *Controller, err error) {
+	imgConfig *operatorapiv1.ScanImageConfig, securityScanJobTolerations []corev1.Toleration, customScanHostPaths []string) (ctl *Controller, err error) {
 	if cfg == nil {
 		cfg, err = rest.InClusterConfig()
 		if err != nil {
@@ -152,6 +153,7 @@ func NewController(ctx context.Context, cfg *rest.Config, namespace, name string
 	ctl.daemonsets = ctl.appsFactory.Apps().V1().DaemonSet()
 	ctl.daemonsetCache = ctl.appsFactory.Apps().V1().DaemonSet().Cache()
 	ctl.securityScanJobTolerations = securityScanJobTolerations
+	ctl.customScanHostPaths = customScanHostPaths
 	return ctl, nil
 }
 

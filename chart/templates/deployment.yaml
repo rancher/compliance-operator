@@ -41,6 +41,8 @@ spec:
           value: '{{ .Values.global.cattle.clusterName }}'
         - name: OPERATOR_DEBUG
           value: '{{ .Values.debug }}'
+        - name: CUSTOM_SCAN_HOST_PATHS
+          value: '{{ .Values.customScanHostPaths | toJson }}'
         {{- if .Values.securityScanJob.overrideTolerations }}
         - name: SECURITY_SCAN_JOB_TOLERATIONS
           value: '{{ .Values.securityScanJob.tolerations | toJson  }}'
