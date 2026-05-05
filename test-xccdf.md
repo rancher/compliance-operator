@@ -34,16 +34,16 @@ spec:
         imagePullPolicy: Always
 ```
 
-Apply updated STIG profile:
-```bash
-kubectl apply -f rke2-stig-1.31-rgs.yaml
-```
-
 Apply CRDs:
 ```bash
 kubectl apply -f crds/clusterscan.yaml
 kubectl apply -f crds/clusterscanreport.yaml
 kubectl apply -f crds/clusterscanbenchmark.yaml
+```
+
+Apply updated STIG profile:
+```bash
+kubectl apply -f rke2-stig-1.31-rgs.yaml
 ```
 
 After setting image pull policy to always, delete pods to force refresh:
