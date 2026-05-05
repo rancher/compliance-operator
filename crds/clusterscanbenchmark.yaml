@@ -47,6 +47,102 @@ spec:
               minKubernetesVersion:
                 nullable: true
                 type: string
+              benchmarkMetadata:
+                nullable: true
+                properties:
+                  benchmarkId:
+                    nullable: true
+                    type: string
+                  title:
+                    nullable: true
+                    type: string
+                  clusterName:
+                    nullable: true
+                    type: string
+                  contributor:
+                    nullable: true
+                    type: string
+                  creator:
+                    nullable: true
+                    type: string
+                  description:
+                    nullable: true
+                    type: string
+                  frontMatter:
+                    nullable: true
+                    type: string
+                  notice:
+                    nullable: true
+                    type: string
+                  noticeId:
+                    nullable: true
+                    type: string
+                  plainText:
+                    nullable: true
+                    type: string
+                  plainTextId:
+                    nullable: true
+                    type: string
+                  platform:
+                    nullable: true
+                    type: string
+                  publisher:
+                    nullable: true
+                    type: string
+                  rearMatter:
+                    nullable: true
+                    type: string
+                  referenceHref:
+                    nullable: true
+                    type: string
+                  referenceTitle:
+                    nullable: true
+                    type: string
+                  referenceType:
+                    nullable: true
+                    type: string
+                  referenceSubject:
+                    nullable: true
+                    type: string
+                  referenceIdentifier:
+                    nullable: true
+                    type: string
+                  checkHref:
+                    nullable: true
+                    type: string
+                  checkName:
+                    nullable: true
+                    type: string
+                  source:
+                    nullable: true
+                    type: string
+                type: object
+              stigChecks:
+                nullable: true
+                type: object
+                additionalProperties:
+                  properties:
+                    ruleId:
+                      nullable: true
+                      type: string
+                    version:
+                      nullable: true
+                      type: string
+                    severity:
+                      nullable: true
+                      type: string
+                    fixId:
+                      nullable: true
+                      type: string
+                    checkId:
+                      nullable: true
+                      type: string
+                    cci:
+                      nullable: true
+                      type: array
+                      items:
+                        type: string
+                  type: object
             type: object
         type: object
     served: true

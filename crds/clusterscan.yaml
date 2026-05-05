@@ -64,6 +64,15 @@ spec:
                         type: boolean
                     type: object
                 type: object
+              clusterName:
+                nullable: true
+                type: string
+              outputFormat:
+                enum:
+                - json
+                - xccdf
+                nullable: true
+                type: string
               scoreWarning:
                 enum:
                 - pass

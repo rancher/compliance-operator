@@ -109,12 +109,20 @@ do
     
     if [ "${passed}" -gt "0" ]; then
       echo "> compliance-operator worked successfully"
-      
+
       ${KUBECTL} get ClusterScan -o yaml
       ${KUBECTL} get ClusterScanReport -o yaml -A || true
 
       # Compare expected vs actual results
       diff <(jq -S . tests/k3d-expected.json) <(echo "${json}" | jq -S .) || true
+
+      # Verify XCCDF report was generated
+      xccdf=$(${KUBECTL} get ClusterScanReport -o jsonpath='{.items[0].spec.reportXCCDF}' -A 2>/dev/null || true)
+      if [ -z "${xccdf}" ]; then
+        echo "ERR: reportXCCDF is empty — XCCDF export did not run"
+        exit 1
+      fi
+      echo "> XCCDF report generated successfully ($(echo "${xccdf}" | wc -c) bytes)"
 
       exit 0
     fi
