@@ -53,16 +53,5 @@ kubectl delete pod -n compliance-operator-system --all
 
 On Rancher UI, initiate a compliance scan with the rke2-stig-1.31-rgs profile.
 
-<<<<<<< HEAD
-XCCDF generation now happens client-side in the Rancher dashboard. After the scan
-completes, use the dashboard's XCCDF download button to export the report.
-=======
-Retrieve clusterscanreport and export to file:
-```bash
-kubectl get clusterscanreport -n compliance-operator-system
-```
-```bash
-kubectl get clusterscanreport <scan-report> -n compliance-operator-system -o jsonpath='{.spec.reportXCCDF}' > ~/Downloads/scan-report-xccdf.xml   
-```
-Can optionally upload the xml file to a tool like STIG Manager to check output. 
->>>>>>> e71df957119819829b69240fbde806d84e026e50
+XCCDF generation happens client-side in the Rancher dashboard. After the scan
+completes, use the dashboard's XCCDF download button to export the report. For multinode clusters, the download will be a zip file which contains full reports for each node as this is the pattern used by complaiance and security teams.
