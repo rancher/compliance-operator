@@ -92,19 +92,19 @@ type Platform struct {
 
 // BenchmarkMetadata represents the XCCDF metadata element and benchmark-level fields.
 type BenchmarkMetadata struct {
-	Creator      string `xml:"creator"`
-	Publisher    string `xml:"publisher"`
-	Contributor  string `xml:"contributor"`
-	Source       string `xml:"source"`
-	Description  string `xml:"-"`
-	NoticeID     string `xml:"-"`
-	Notice       string `xml:"-"`
-	FrontMatter  string `xml:"-"`
-	RearMatter   string `xml:"-"`
+	Creator       string `xml:"creator"`
+	Publisher     string `xml:"publisher"`
+	Contributor   string `xml:"contributor"`
+	Source        string `xml:"source"`
+	Description   string `xml:"-"`
+	NoticeID      string `xml:"-"`
+	Notice        string `xml:"-"`
+	FrontMatter   string `xml:"-"`
+	RearMatter    string `xml:"-"`
 	ReferenceHref string `xml:"-"`
-	PlainTextID  string `xml:"-"`
-	PlainText    string `xml:"-"`
-	Platform     string `xml:"-"`
+	PlainTextID   string `xml:"-"`
+	PlainText     string `xml:"-"`
+	Platform      string `xml:"-"`
 	// BenchmarkID overrides the generated benchmark XML id attribute.
 	BenchmarkID string `xml:"-"`
 	// Title overrides the generated benchmark title element.

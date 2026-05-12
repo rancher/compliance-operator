@@ -13,9 +13,6 @@ const (
 	ClusterProviderAKS = "aks"
 	ClusterProviderK3s = "k3s"
 
-	OutputFormatJSON  = "json"
-	OutputFormatXCCDF = "xccdf"
-
 	ClusterScanNS                      = "compliance-operator-system"
 	ClusterScanSA                      = "compliance-scan-serviceaccount"
 	ClusterScanConfigMap               = "compliance-config-cm"
@@ -61,9 +58,7 @@ type ClusterScanSpec struct {
 	ScheduledScanConfig *ScheduledScanConfig `yaml:"scheduled_scan_config" json:"scheduledScanConfig,omitempty"`
 	// Specify if tests with "warn" output should be counted towards scan failure
 	ScoreWarning string `yaml:"score_warning" json:"scoreWarning,omitempty"`
-	// OutputFormat specifies the format of the generated scan report. Supported values are "json" (default) and "xccdf".
-	OutputFormat string `json:"outputFormat,omitempty"`
-	// ClusterName sets the XCCDF <target> element in the generated report. Only used when outputFormat is "xccdf".
+	// ClusterName is consumed by the dashboard's XCCDF download flow as the <target> override.
 	ClusterName string `json:"clusterName,omitempty"`
 }
 
@@ -126,7 +121,7 @@ type BenchmarkMetadataSpec struct {
 	Title string `json:"title,omitempty"`
 	// ClusterName overrides the XCCDF <target> element. When empty the operator
 	// falls back to the CLUSTER_NAME env var, then to node names from the report.
-	ClusterName string `json:"clusterName,omitempty"`
+	ClusterName   string `json:"clusterName,omitempty"`
 	Creator       string `json:"creator,omitempty"`
 	Publisher     string `json:"publisher,omitempty"`
 	Contributor   string `json:"contributor,omitempty"`
@@ -168,8 +163,8 @@ type ClusterScanBenchmarkSpec struct {
 	CustomBenchmarkConfigMapName      string `json:"customBenchmarkConfigMapName,omitempty"`
 	CustomBenchmarkConfigMapNamespace string `json:"customBenchmarkConfigMapNamespace,omitempty"`
 
-	BenchmarkMetadata BenchmarkMetadataSpec        `json:"benchmarkMetadata,omitempty"`
-	StigChecks        map[string]StigCheckSpec      `json:"stigChecks,omitempty"`
+	BenchmarkMetadata BenchmarkMetadataSpec    `json:"benchmarkMetadata,omitempty"`
+	StigChecks        map[string]StigCheckSpec `json:"stigChecks,omitempty"`
 }
 
 // +genclient
@@ -203,8 +198,6 @@ type ClusterScanReportSpec struct {
 	BenchmarkVersion string `json:"benchmarkVersion,omitempty"`
 	LastRunTimestamp string `yaml:"last_run_timestamp" json:"lastRunTimestamp"`
 	ReportJSON       string `json:"reportJSON"`
-	// ReportXCCDF contains the scan results in XCCDF 1.2 XML format. Populated when the scan's outputFormat is "xccdf".
-	ReportXCCDF string `json:"reportXCCDF,omitempty"`
 }
 
 type ScanImageConfig struct {

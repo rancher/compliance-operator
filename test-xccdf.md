@@ -51,13 +51,7 @@ After setting image pull policy to always, delete pods to force refresh:
 kubectl delete pod -n compliance-operator-system --all
 ```
 
-On Rancher UI, initiate complaince scan with the rke2-stig-1.31-rgs profile. Click edit as yaml and add `outputFormat: xccdf` under `spec:`.
+On Rancher UI, initiate a compliance scan with the rke2-stig-1.31-rgs profile.
 
-Retrieve clusterscanreport and export to file:
-```bash
-kubectl get clusterscanreport -n compliance-operator-system
-```
-```bash
-kubectl get clusterscanreport <scan-report> -n compliance-operator-system -o jsonpath='{.spec.reportXCCDF}' > ~/Downloads/scan-report-xccdf.xml   
-```
-Can optionally upload the xml file to a tool like STIG Manager to check output. 
+XCCDF generation now happens client-side in the Rancher dashboard. After the scan
+completes, use the dashboard's XCCDF download button to export the report.

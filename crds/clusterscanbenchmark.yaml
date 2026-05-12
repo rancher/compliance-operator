@@ -32,28 +32,15 @@ spec:
         properties:
           spec:
             properties:
-              clusterProvider:
-                nullable: true
-                type: string
-              customBenchmarkConfigMapName:
-                nullable: true
-                type: string
-              customBenchmarkConfigMapNamespace:
-                nullable: true
-                type: string
-              maxKubernetesVersion:
-                nullable: true
-                type: string
-              minKubernetesVersion:
-                nullable: true
-                type: string
               benchmarkMetadata:
-                nullable: true
                 properties:
                   benchmarkId:
                     nullable: true
                     type: string
-                  title:
+                  checkHref:
+                    nullable: true
+                    type: string
+                  checkName:
                     nullable: true
                     type: string
                   clusterName:
@@ -95,54 +82,67 @@ spec:
                   referenceHref:
                     nullable: true
                     type: string
+                  referenceIdentifier:
+                    nullable: true
+                    type: string
+                  referenceSubject:
+                    nullable: true
+                    type: string
                   referenceTitle:
                     nullable: true
                     type: string
                   referenceType:
                     nullable: true
                     type: string
-                  referenceSubject:
-                    nullable: true
-                    type: string
-                  referenceIdentifier:
-                    nullable: true
-                    type: string
-                  checkHref:
-                    nullable: true
-                    type: string
-                  checkName:
-                    nullable: true
-                    type: string
                   source:
                     nullable: true
                     type: string
+                  title:
+                    nullable: true
+                    type: string
                 type: object
-              stigChecks:
+              clusterProvider:
                 nullable: true
-                type: object
+                type: string
+              customBenchmarkConfigMapName:
+                nullable: true
+                type: string
+              customBenchmarkConfigMapNamespace:
+                nullable: true
+                type: string
+              maxKubernetesVersion:
+                nullable: true
+                type: string
+              minKubernetesVersion:
+                nullable: true
+                type: string
+              stigChecks:
                 additionalProperties:
                   properties:
-                    ruleId:
+                    cci:
+                      items:
+                        nullable: true
+                        type: string
                       nullable: true
-                      type: string
-                    version:
-                      nullable: true
-                      type: string
-                    severity:
+                      type: array
+                    checkId:
                       nullable: true
                       type: string
                     fixId:
                       nullable: true
                       type: string
-                    checkId:
+                    ruleId:
                       nullable: true
                       type: string
-                    cci:
+                    severity:
                       nullable: true
-                      type: array
-                      items:
-                        type: string
+                      type: string
+                    version:
+                      nullable: true
+                      type: string
                   type: object
+                nullable: true
+                type: object
             type: object
         type: object
     served: true
