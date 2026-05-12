@@ -34,16 +34,16 @@ spec:
         imagePullPolicy: Always
 ```
 
-Apply updated STIG profile:
-```bash
-kubectl apply -f rke2-stig-1.31-rgs.yaml
-```
-
 Apply CRDs:
 ```bash
 kubectl apply -f crds/clusterscan.yaml
 kubectl apply -f crds/clusterscanreport.yaml
 kubectl apply -f crds/clusterscanbenchmark.yaml
+```
+
+Apply updated STIG profile:
+```bash
+kubectl apply -f rke2-stig-1.31-rgs.yaml
 ```
 
 After setting image pull policy to always, delete pods to force refresh:
@@ -53,5 +53,16 @@ kubectl delete pod -n compliance-operator-system --all
 
 On Rancher UI, initiate a compliance scan with the rke2-stig-1.31-rgs profile.
 
+<<<<<<< HEAD
 XCCDF generation now happens client-side in the Rancher dashboard. After the scan
 completes, use the dashboard's XCCDF download button to export the report.
+=======
+Retrieve clusterscanreport and export to file:
+```bash
+kubectl get clusterscanreport -n compliance-operator-system
+```
+```bash
+kubectl get clusterscanreport <scan-report> -n compliance-operator-system -o jsonpath='{.spec.reportXCCDF}' > ~/Downloads/scan-report-xccdf.xml   
+```
+Can optionally upload the xml file to a tool like STIG Manager to check output. 
+>>>>>>> e71df957119819829b69240fbde806d84e026e50
