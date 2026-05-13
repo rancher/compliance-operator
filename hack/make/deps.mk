@@ -1,9 +1,10 @@
 # renovate: datasource=github-release-attachments depName=golangci/golangci-lint
-GOLANGCI_VERSION = v2.5.0
-# renovate: datasource=github-release-attachments depName=golangci/golangci-lint digestVersion=v2.5.0
-GOLANGCI_SUM_amd64 := c77313a77e19b06123962c411d9943cc0d092bbec76b956104d18964e274902e
-# renovate: datasource=github-release-attachments depName=golangci/golangci-lint digestVersion=v2.5.0
-GOLANGCI_SUM_arm64 := 48693a98a7f4556d1117300aae240d0fe483df8d6f36dfaba56504626101a66e
+GOLANGCI_VERSION = v2.11.4
+# renovate: datasource=github-release-attachments depName=golangci/golangci-lint digestVersion=v2.11.4
+GOLANGCI_SUM_amd64=200c5b7503f67b59a6743ccf32133026c174e272b930ee79aa2aa6f37aca7ef1
+# renovate: datasource=github-release-attachments depName=golangci/golangci-lint digestVersion=v2.11.4
+GOLANGCI_SUM_arm64=3bcfa2e6f3d32b2bf5cd75eaa876447507025e0303698633f722a05331988db4
+
 # renovate: datasource=github-release-attachments depName=k3d-io/k3d
 K3D_VERSION = v5.8.3
 # renovate: datasource=github-release-attachments depName=k3d-io/k3d digestVersion=v5.8.3
