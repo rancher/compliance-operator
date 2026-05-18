@@ -7,6 +7,7 @@ import (
 
 	"github.com/sirupsen/logrus"
 	batchv1 "k8s.io/api/batch/v1"
+	corev1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/labels"
@@ -93,6 +94,27 @@ func (c *Controller) handleJobs(ctx context.Context) error {
 			}
 			c.currentScanName = ""
 			return obj, nil
+		}
+
+		// If the job itself has failed (e.g. ActiveDeadlineSeconds exceeded) and the scan
+		// hasn't been updated yet, mark it failed so it doesn't stall in running forever.
+		if !v1.ClusterScanConditionRunCompleted.IsTrue(scan) {
+			for _, cond := range obj.Status.Conditions {
+				if cond.Type == batchv1.JobFailed && cond.Status == corev1.ConditionTrue {
+					scanCopy := scan.DeepCopy()
+					v1.ClusterScanConditionRunCompleted.True(scanCopy)
+					v1.ClusterScanConditionFailed.True(scanCopy)
+					v1.ClusterScanConditionFailed.Message(scanCopy, fmt.Sprintf("Scan job failed: %s", cond.Message))
+					c.setClusterScanStatusDisplay(scanCopy)
+					_, err = scans.UpdateStatus(scanCopy)
+					if err != nil {
+						return nil, fmt.Errorf("error updating scan status for failed job %v: %v", obj.Name, err)
+					}
+					logrus.Infof("Marking scan %v as failed due to job failure: %v", scanName, cond.Message)
+					jobs.Enqueue(obj.Namespace, obj.Name)
+					return obj, nil
+				}
+			}
 		}
 
 		if v1.ClusterScanConditionRunCompleted.IsTrue(scan) {

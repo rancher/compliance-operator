@@ -22,7 +22,8 @@ import (
 const (
 	defaultTerminationGracePeriodSeconds = int64(0)
 	defaultBackoffLimit                  = int32(0)
-	defaultTTLSecondsAfterFinished       = int32(0)
+	defaultTTLSecondsAfterFinished       = int32(60)
+	defaultActiveDeadlineSeconds         = int64(600)
 )
 
 var (
@@ -36,6 +37,18 @@ var (
 	}(defaultTerminationGracePeriodSeconds)
 
 	ttlSecondsAfterFinished = readFromEnv("COMPLIANCE_JOB_TTL_SECONDS_AFTER_FINISH", defaultTTLSecondsAfterFinished)
+
+	activeDeadlineSeconds = func() int64 {
+		if str, ok := os.LookupEnv("COMPLIANCE_JOB_ACTIVE_DEADLINE_SECONDS"); ok {
+			i, err := strconv.ParseInt(str, 10, 64)
+			if err != nil {
+				logrus.Errorf("failed to parse $COMPLIANCE_JOB_ACTIVE_DEADLINE_SECONDS: %v", err)
+				return defaultActiveDeadlineSeconds
+			}
+			return i
+		}
+		return defaultActiveDeadlineSeconds
+	}()
 )
 
 func readFromEnv(key string, defaultValue int32) int32 {
@@ -73,6 +86,7 @@ func New(clusterscan *operatorapiv1.ClusterScan, clusterscanprofile *operatorapi
 		Spec: batchv1.JobSpec{
 			BackoffLimit:            &backoffLimit,
 			TTLSecondsAfterFinished: &ttlSecondsAfterFinished,
+			ActiveDeadlineSeconds:   &activeDeadlineSeconds,
 			Template: corev1.PodTemplateSpec{
 				ObjectMeta: metav1.ObjectMeta{
 					Labels: labels.Set{

@@ -109,7 +109,7 @@ do
     
     if [ "${passed}" -gt "0" ]; then
       echo "> compliance-operator worked successfully"
-      
+
       ${KUBECTL} get ClusterScan -o yaml
       ${KUBECTL} get ClusterScanReport -o yaml -A || true
 

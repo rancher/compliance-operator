@@ -44,6 +44,9 @@ spec:
         properties:
           spec:
             properties:
+              clusterName:
+                nullable: true
+                type: string
               scanProfileName:
                 nullable: true
                 type: string
