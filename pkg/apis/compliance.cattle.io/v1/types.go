@@ -121,15 +121,17 @@ type BenchmarkMetadataSpec struct {
 	Title string `json:"title,omitempty"`
 	// ClusterName overrides the XCCDF <target> element. When empty the operator
 	// falls back to the CLUSTER_NAME env var, then to node names from the report.
-	ClusterName   string `json:"clusterName,omitempty"`
-	Creator       string `json:"creator,omitempty"`
-	Publisher     string `json:"publisher,omitempty"`
-	Contributor   string `json:"contributor,omitempty"`
-	Source        string `json:"source,omitempty"`
-	Description   string `json:"description,omitempty"`
-	NoticeID      string `json:"noticeId,omitempty"`
-	Notice        string `json:"notice,omitempty"`
-	FrontMatter   string `json:"frontMatter,omitempty"`
+	ClusterName string `json:"clusterName,omitempty"`
+	Creator     string `json:"creator,omitempty"`
+	Publisher   string `json:"publisher,omitempty"`
+	Contributor string `json:"contributor,omitempty"`
+	Source      string `json:"source,omitempty"`
+	Description string `json:"description,omitempty"`
+	NoticeID    string `json:"noticeId,omitempty"`
+	Notice      string `json:"notice,omitempty"`
+	// FrontMatter sets the text of the XCCDF opening content. Not applicable if unavailable in the compliance profile.
+	FrontMatter string `json:"frontMatter,omitempty"`
+	// RearMatter sets the text of the XCCDF closing content. Not applicable if unavailable in the compliance profile.
 	RearMatter    string `json:"rearMatter,omitempty"`
 	ReferenceHref string `json:"referenceHref,omitempty"`
 	PlainTextID   string `json:"plainTextId,omitempty"`
