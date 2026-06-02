@@ -74,7 +74,8 @@ func List() []crd.CRD {
 				WithColumn("MinKubernetesVersion", ".spec.minKubernetesVersion").
 				WithColumn("MaxKubernetesVersion", ".spec.maxKubernetesVersion").
 				WithColumn("customBenchmarkConfigMapName", ".spec.customBenchmarkConfigMapName").
-				WithColumn("customBenchmarkConfigMapNamespace", ".spec.customBenchmarkConfigMapNamespace")
+				WithColumn("customBenchmarkConfigMapNamespace", ".spec.customBenchmarkConfigMapNamespace").
+				WithColumn("exportMetadataConfigMapName", ".spec.exportMetadataConfigMapName")
 		}),
 	}
 }
