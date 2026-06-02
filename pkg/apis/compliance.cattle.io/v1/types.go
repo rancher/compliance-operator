@@ -119,13 +119,6 @@ type ClusterScanBenchmarkSpec struct {
 
 	CustomBenchmarkConfigMapName      string `json:"customBenchmarkConfigMapName,omitempty"`
 	CustomBenchmarkConfigMapNamespace string `json:"customBenchmarkConfigMapNamespace,omitempty"`
-
-	// ExportMetadataConfigMapName references a ConfigMap whose data keys are
-	// framework names (e.g. "stig.yaml", "cis.yaml") and whose values are
-	// framework-specific metadata consumed by dashboard export renderers
-	// (XCCDF, SARIF, etc.). The operator itself does not read this ConfigMap.
-	ExportMetadataConfigMapName      string `json:"exportMetadataConfigMapName,omitempty"`
-	ExportMetadataConfigMapNamespace string `json:"exportMetadataConfigMapNamespace,omitempty"`
 }
 
 // +genclient

@@ -26,9 +26,6 @@ spec:
     - jsonPath: .spec.customBenchmarkConfigMapNamespace
       name: customBenchmarkConfigMapNamespace
       type: string
-    - jsonPath: .spec.exportMetadataConfigMapName
-      name: exportMetadataConfigMapName
-      type: string
     name: v1
     schema:
       openAPIV3Schema:
@@ -42,12 +39,6 @@ spec:
                 nullable: true
                 type: string
               customBenchmarkConfigMapNamespace:
-                nullable: true
-                type: string
-              exportMetadataConfigMapName:
-                nullable: true
-                type: string
-              exportMetadataConfigMapNamespace:
                 nullable: true
                 type: string
               maxKubernetesVersion:
