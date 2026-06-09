@@ -70,7 +70,7 @@ data:
           defaultMode: 420
           items:
           {{- range $key, $value := .customBenchmarkConfigMapData }}
-          {{- if eq $key "config.yaml"}}
+          {{- if or (eq $key "config.yaml") (eq $key "metadata.yaml") }}
           - key: {{ $key }}
             path: {{ $key }}
           {{- else}}
