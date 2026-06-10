@@ -287,7 +287,7 @@ func New(clusterscan *operatorapiv1.ClusterScan, clusterscanprofile *operatorapi
 			},
 		}
 		for key := range customcm.Data {
-			if key == "config.yaml" {
+			if key == "config.yaml" || key == "metadata.yaml" {
 				customVol.VolumeSource.ConfigMap.Items = append(customVol.VolumeSource.ConfigMap.Items, corev1.KeyToPath{Key: key, Path: key})
 			} else {
 				customVol.VolumeSource.ConfigMap.Items = append(customVol.VolumeSource.ConfigMap.Items, corev1.KeyToPath{Key: key, Path: clusterscanbenchmark.Name + "/" + key})
