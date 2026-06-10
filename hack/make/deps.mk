@@ -6,11 +6,11 @@ GOLANGCI_SUM_amd64=8df580d2670fed8fa984aac0507099af8df275e665215f5c7a2ae3943893a
 GOLANGCI_SUM_arm64=44cd40a8c76c86755375adfeea52cfd3533cb43d7bd647771e0ae065e166df3a
 
 # renovate: datasource=github-release-attachments depName=k3d-io/k3d
-K3D_VERSION = v5.8.3
-# renovate: datasource=github-release-attachments depName=k3d-io/k3d digestVersion=v5.8.3
-K3D_SUM_amd64 := dbaa79a76ace7f4ca230a1ff41dc7d8a5036a8ad0309e9c54f9bf3836dbe853e
-# renovate: datasource=github-release-attachments depName=k3d-io/k3d digestVersion=v5.8.3
-K3D_SUM_arm64 := 0b8110f2229631af7402fb828259330985918b08fefd38b7f1b788a1c8687216
+K3D_VERSION = v5.9.0
+# renovate: datasource=github-release-attachments depName=k3d-io/k3d digestVersion=v5.9.0
+K3D_SUM_amd64 := 06d8f25bc3a971c4eb29e0ff08429b180402db0f4dec838c9eac427e296800a0
+# renovate: datasource=github-release-attachments depName=k3d-io/k3d digestVersion=v5.9.0
+K3D_SUM_arm64 := 03cde5cf23e6e8e67de5a039ecf26e5b85aca82fba3e5d13dadf904cd218a250
 
 # renovate: datasource=github-releases packageName=kubernetes/kubernetes
 KUBECTL_VERSION = v1.36.1
