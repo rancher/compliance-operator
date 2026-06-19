@@ -44,8 +44,8 @@ global:
     systemDefaultRegistry: ""
     clusterName: ""
   kubectl:
-    repository: rancher/kubectl
-    tag: v1.36.0
+    repository: rancher/kuberlr-kubectl
+    tag: v8.1.1
 
 alerts:
   enabled: false
