@@ -43,6 +43,8 @@ global:
   cattle:
     systemDefaultRegistry: ""
     clusterName: ""
+    # Optional pull secrets for private registries.
+    # Referenced secrets must exist in the chart release namespace (compliance-operator-system).
     imagePullSecrets: []
   kubectl:
     repository: rancher/kubectl

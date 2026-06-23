@@ -44,7 +44,7 @@ or plain strings.
 {{- if not (empty $pullSecrets) -}}
 imagePullSecrets:
   {{- range $pullSecrets | uniq }}
-  - name: {{ . }}
+  - name: {{ . | quote }}
   {{- end }}
 {{- end -}}
 {{- end -}}
