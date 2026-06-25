@@ -20,8 +20,8 @@ KUBECTL_SUM_arm64 := 59f7ee8e477fae658447607dc3c8790ac17a1b016c01c622c12070e969e
 KUBECTL_SUM_amd64 := 629d3f410e09bf49b64ae7079f7f0bda1191efed311f7d37fdbab0ad5b0ec2b7
 
 # renovate: datasource=github-release-attachments depName=helm/helm
-HELM_VERSION = v4.2.0
-# renovate: datasource=github-release-attachments depName=helm/helm digestVersion=v4.2.0
+HELM_VERSION = v4.2.2
+# renovate: datasource=github-release-attachments depName=helm/helm digestVersion=v4.2.2
 HELM_SUM_amd64 := 97dbeb971be4ac4b27e3839976d9564c0fb35c6f3b1da89dd1e292d236af4096
-# renovate: datasource=github-release-attachments depName=helm/helm digestVersion=v4.2.0
+# renovate: datasource=github-release-attachments depName=helm/helm digestVersion=v4.2.2
 HELM_SUM_arm64 := 1f8de130dfbd04de64978e7b852a7a547be1404956a366608276d2520b678670
