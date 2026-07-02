@@ -33,7 +33,7 @@ jobs:
     
     steps:
     - name: Checkout code
-      uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
 
     - name: Load Secrets from Vault
       uses: rancher-eio/read-vault-secrets@0da85151ad1f19ed7986c41587e45aac1ace74b6 # v3
@@ -46,7 +46,7 @@ jobs:
           secret/data/github/repo/${{ github.repository }}/rancher-prime-registry/credentials password | PRIME_REGISTRY_PASSWORD
 
     - name: Publish manifest
-      uses: rancher/ecm-distro-tools/actions/publish-image@a7a867a6376bf4a1cee397558f3c85393769f069 # v0.69.4
+      uses: rancher/ecm-distro-tools/actions/publish-image@016551c414f82e64af8c4c18315ea3093d10be7c # v0.74.3
       with:
         image: compliance-operator
         tag: ${{ github.ref_name }}${{ matrix.tag-suffix }}
@@ -69,7 +69,7 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
       
     - name: Create GitHub Release
       run: |
