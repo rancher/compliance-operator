@@ -16,8 +16,8 @@ github.com/PuerkitoBio/purell v1.0.0/go.mod h1:c11w/QuzBsJSee3cPx9rAFu61PvFxuPbt
 github.com/PuerkitoBio/urlesc v0.0.0-20160726150825-5bd2802263f2/go.mod h1:uGdkoq3SwY9Y+13GIhn11/XLaGBb4BfwItxLd5jeuXE=
 github.com/antlr4-go/antlr/v4 v4.13.0 h1:lxCg3LAv+EUK6t1i0y1V6/SLeUi0eKEKdhQAlS8TVTI=
 github.com/antlr4-go/antlr/v4 v4.13.0/go.mod h1:pfChB/xh/Unjila75QW7+VU4TSnWnnk9UTnmpPaOR2g=
-github.com/aquasecurity/kube-bench v0.15.5 h1:rmMGuZaa8v5N0M2e0+9L1UFdGS4tzL2+E52v9xZsn8s=
-github.com/aquasecurity/kube-bench v0.15.5/go.mod h1:lPtu3o7HHcTeLkY30DG3L+WGGkDI/i/pG3P+RU7gSq4=
+github.com/aquasecurity/kube-bench v0.15.6 h1:r1p/dGN8IxGowV+hfTw5Lk2IaRV79dZcq0xd6MincJ8=
+github.com/aquasecurity/kube-bench v0.15.6/go.mod h1:HxD7t5AU9q5tJu5gCvAvmbd+LYPxnacywdbLCTD1HnU=
 github.com/aws/aws-sdk-go-v2 v1.41.5 h1:dj5kopbwUsVUVFgO4Fi5BIT3t4WyqIDjGKCangnV/yY=
 github.com/aws/aws-sdk-go-v2 v1.41.5/go.mod h1:mwsPRE8ceUUpiTgF7QmQIJ7lgsKUPQOUl3o72QBrE1o=
 github.com/aws/aws-sdk-go-v2/service/securityhub v1.68.3 h1:Nz5/FeXnKq+7YtIeNtHIuDeX/ZeFWDETL0oaqf8V0VI=
@@ -225,8 +225,8 @@ github.com/rancher/kubernetes-provider-detector v0.1.5 h1:hWRAsWuJOemzGjz/XrbTlM
 github.com/rancher/kubernetes-provider-detector v0.1.5/go.mod h1:ypuJS7kP7rUiAn330xG46mj+Nhvym05GM8NqMVekpH0=
 github.com/rancher/lasso v0.2.9 h1:5Xk9Qid+YDOLpa6s5xalcSR0cA5BMbgWcaOZ8kdNU7k=
 github.com/rancher/lasso v0.2.9/go.mod h1:PMtxoVahRQvhEAi1HVOfyLDe1CrtGwTqOtkPVjSSkns=
-github.com/rancher/security-scan v0.10.0-rc.2 h1:lMH3kTjd8P+ZD+nDuNPAp4zapNffgi0wPR0UGl+kXq8=
-github.com/rancher/security-scan v0.10.0-rc.2/go.mod h1:QGNqiHNzv5h3pU+nb91UwlGe9z82kOFAYhh3a9OAJKc=
+github.com/rancher/security-scan v0.10.0 h1:2+jCBiYSSgn3u3HnpQWzAWXQlsDdk+JJG3PDcIpiXFw=
+github.com/rancher/security-scan v0.10.0/go.mod h1:oRgVXWcUxrGC0zDP9hTQ6CFjuKER8yq35yEzjgT800c=
 github.com/rancher/wrangler/v3 v3.7.0 h1:rB6GJpnc4Kz8lWuAH3wZwQPgJqPGOu43Aih6147uZB8=
 github.com/rancher/wrangler/v3 v3.7.0/go.mod h1:kqldrBWdHR5zIipX/nr8yuZBFqFrL7GfVP1uwVJSWPQ=
 github.com/robfig/cron v1.2.0 h1:ZjScXvvxeQ63Dbyxy76Fj3AT3Ut0aKsyd2/tl3DTMuQ=
