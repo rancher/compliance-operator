@@ -43,7 +43,7 @@ $(HELM):
 	mkdir -p $(TOOLS_BIN)/tmp-helm
 	curl -sSfL -o $(TOOLS_BIN)/helm.tar.gz \
 		"https://get.helm.sh/helm-$(HELM_VERSION)-$(OS_NAME)-$(OS_ARCH).tar.gz"
-	echo "$(HELM_SUM_$(OS_ARCH))  $(TOOLS_BIN)/helm.tar.gz" | shasum -a 256 -c -
+	echo "$(HELM_CHECKSUM_$(OS_ARCH))  $(TOOLS_BIN)/helm.tar.gz" | shasum -a 256 -c -
 	tar -xf $(TOOLS_BIN)/helm.tar.gz --strip-components 1 -C $(TOOLS_BIN)/tmp-helm
 	mv $(TOOLS_BIN)/tmp-helm/helm $(HELM)
 	chmod u+x $(HELM)
