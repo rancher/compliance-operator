@@ -14,7 +14,7 @@ require (
 	github.com/robfig/cron v1.2.0
 	github.com/sirupsen/logrus v1.9.4
 	github.com/urfave/cli/v3 v3.10.1
-	golang.org/x/crypto/x509roots/fallback v0.0.0-20260323153451-8400f4a93807
+	golang.org/x/crypto/x509roots/fallback v0.0.0-20260804050112-5ed494470b06
 	k8s.io/api v0.36.3
 	k8s.io/apiextensions-apiserver v0.36.3
 	k8s.io/apimachinery v0.36.3
