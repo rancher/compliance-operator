@@ -4,10 +4,15 @@
     "github>rancher/renovate-config//rancher-main#release"
   ],
   "baseBranchPatterns": [
-    "main"
+    "main",
+    "release/v1.2",
+    "release/v1.3",
+    "release/v1.4",
+    "release/v1.5"
   ],
   "ignoreDeps": [
-    "github.com/rancher/lasso"
+    "github.com/rancher/lasso",
+    "github.com/rancher/security-scan"
   ],
   "packageRules": [
     {
@@ -25,6 +30,42 @@
       "extends": [
         "github>rancher/renovate-config//rancher-2.13#release"
       ]
+    },
+    {
+      "matchBaseBranches": [
+        "release/v1.4"
+      ],
+      "extends": [
+        "github>rancher/renovate-config//rancher-2.14#release"
+      ]
+    },
+    {
+      "matchBaseBranches": [
+        "release/v1.5"
+      ],
+      "extends": [
+        "github>rancher/renovate-config//rancher-2.15#release"
+      ]
+    },
+    {
+      "matchBaseBranches": [
+        "release/v1.2",
+        "release/v1.3",
+        "release/v1.4"
+      ],
+      "matchPackageNames": [
+        "k8s.io/**"
+      ],
+      "allowedVersions": "<0.36.0"
+    },
+    {
+      "matchBaseBranches": [
+        "release/v1.5"
+      ],
+      "matchPackageNames": [
+        "k8s.io/**"
+      ],
+      "allowedVersions": "<0.37.0"
     }
   ],
   "vulnerabilityAlerts": {
