@@ -4,7 +4,7 @@ go 1.26.3
 
 require (
 	github.com/blang/semver v3.5.1+incompatible
-	github.com/prometheus-operator/prometheus-operator/pkg/apis/monitoring v0.93.0
+	github.com/prometheus-operator/prometheus-operator/pkg/apis/monitoring v0.93.1
 	github.com/prometheus-operator/prometheus-operator/pkg/client v0.93.0
 	github.com/prometheus/client_golang v1.24.1
 	github.com/rancher/kubernetes-provider-detector v0.1.5
