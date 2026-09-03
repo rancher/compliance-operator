@@ -9,7 +9,7 @@ require (
 	github.com/prometheus/client_golang v1.24.1
 	github.com/rancher/kubernetes-provider-detector v0.1.5
 	github.com/rancher/lasso v0.2.9
-	github.com/rancher/security-scan v0.10.0
+	github.com/rancher/security-scan v0.10.2-rc.1
 	github.com/rancher/wrangler/v3 v3.7.0
 	github.com/robfig/cron v1.2.0
 	github.com/sirupsen/logrus v1.9.4
@@ -22,10 +22,10 @@ require (
 )
 
 require (
-	github.com/aquasecurity/kube-bench v0.15.6 // indirect
-	github.com/aws/aws-sdk-go-v2 v1.41.5 // indirect
-	github.com/aws/aws-sdk-go-v2/service/securityhub v1.68.3 // indirect
-	github.com/aws/smithy-go v1.24.2 // indirect
+	github.com/aquasecurity/kube-bench v0.16.0 // indirect
+	github.com/aws/aws-sdk-go-v2 v1.43.3 // indirect
+	github.com/aws/aws-sdk-go-v2/service/securityhub v1.75.3 // indirect
+	github.com/aws/smithy-go v1.27.6 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
 	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc // indirect
