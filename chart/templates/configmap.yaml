@@ -10,4 +10,4 @@ data:
   gke: "gke-profile-1.6.0"
   aks: "aks-profile-1.7"
   k3s: "k3s-cis-2.0-profile"
-  default: "cis-2.0-profile"
+  default: "cis-1.12-profile"
