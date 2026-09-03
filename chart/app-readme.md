@@ -26,7 +26,6 @@ kube-bench runs industry standard benchmark tests for Kubernetes. Most of our su
 | CIS    | 1.10                | cis-1.10            | ≥ 1.28                  |
 | CIS    | 1.11                | cis-1.11            | ≥ 1.29                  |
 | CIS    | 1.12                | cis-1.12            | ≥ 1.32                  |
-| CIS    | 2.0                 | cis-2.0             | ≥ 1.34                  |
 | CIS    | rke2-1.9.0          | rke2-cis-1.9        | rke2 1.27.x             |
 | CIS    | rke2-1.10.0         | rke2-cis-1.10       | ≥ rke2 1.28             |
 | CIS    | rke2-1.11.0         | rke2-cis-1.11       | ≥ rke2 1.29             |
