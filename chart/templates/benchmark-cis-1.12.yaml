@@ -6,4 +6,3 @@ metadata:
 spec:
   clusterProvider: ""
   minKubernetesVersion: "1.32.0"
-  maxKubernetesVersion: "1.33.x"
