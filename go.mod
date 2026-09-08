@@ -12,7 +12,7 @@ require (
 	github.com/rancher/security-scan v0.10.0
 	github.com/rancher/wrangler/v3 v3.7.1
 	github.com/robfig/cron v1.2.0
-	github.com/sirupsen/logrus v1.9.4
+	github.com/sirupsen/logrus v1.10.2
 	github.com/urfave/cli/v3 v3.10.1
 	golang.org/x/crypto/x509roots/fallback v0.0.0-20260804050112-5ed494470b06
 	k8s.io/api v0.36.3
@@ -70,7 +70,7 @@ require (
 	github.com/subosito/gotenv v1.6.0 // indirect
 	github.com/x448/float16 v0.8.4 // indirect
 	go.yaml.in/yaml/v2 v2.4.4 // indirect
-	go.yaml.in/yaml/v3 v3.0.4 // indirect
+	go.yaml.in/yaml/v3 v3.0.5 // indirect
 	golang.org/x/mod v0.40.0 // indirect
 	golang.org/x/net v0.58.0 // indirect
 	golang.org/x/oauth2 v0.36.0 // indirect
