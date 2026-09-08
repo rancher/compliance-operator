@@ -13,11 +13,11 @@ K3D_SUM_amd64 := 06d8f25bc3a971c4eb29e0ff08429b180402db0f4dec838c9eac427e296800a
 K3D_SUM_arm64 := 03cde5cf23e6e8e67de5a039ecf26e5b85aca82fba3e5d13dadf904cd218a250
 
 # renovate: datasource=github-releases packageName=kubernetes/kubernetes
-KUBECTL_VERSION = v1.36.1
-# renovate: datasource=github-releases packageName=kubernetes/kubernetes digestVersion=v1.36.1
-KUBECTL_SUM_arm64 := 59f7ee8e477fae658447607dc3c8790ac17a1b016c01c622c12070e969e2d4e7
-# renovate: datasource=github-releases packageName=kubernetes/kubernetes digestVersion=v1.36.1
-KUBECTL_SUM_amd64 := 629d3f410e09bf49b64ae7079f7f0bda1191efed311f7d37fdbab0ad5b0ec2b7
+KUBECTL_VERSION = v1.37.0
+# renovate: datasource=github-releases packageName=kubernetes/kubernetes digestVersion=v1.37.0
+KUBECTL_SUM_arm64 := 922df28df248cc00a9e025f947704f1d1482de64ece54cfe57e61f19eaf1eef3
+# renovate: datasource=github-releases packageName=kubernetes/kubernetes digestVersion=v1.37.0
+KUBECTL_SUM_amd64 := 6129359f4e1f3848a5572ccb0b26cf28b8ca08cef38c95a765b2f64a2c961a2f
 
 # renovate-local: helm-amd64
 HELM_VERSION = v4.2.4
