@@ -13,7 +13,7 @@ K3D_SUM_amd64 := dbaa79a76ace7f4ca230a1ff41dc7d8a5036a8ad0309e9c54f9bf3836dbe853
 K3D_SUM_arm64 := 0b8110f2229631af7402fb828259330985918b08fefd38b7f1b788a1c8687216
 
 # renovate: datasource=github-releases packageName=kubernetes/kubernetes
-KUBECTL_VERSION = v1.36.1
+KUBECTL_VERSION = v1.36.5
 # renovate: datasource=github-releases packageName=kubernetes/kubernetes digestVersion=v1.36.1
 KUBECTL_SUM_arm64 := 59f7ee8e477fae658447607dc3c8790ac17a1b016c01c622c12070e969e2d4e7
 # renovate: datasource=github-releases packageName=kubernetes/kubernetes digestVersion=v1.36.1
