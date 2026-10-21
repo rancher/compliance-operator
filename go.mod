@@ -1,6 +1,6 @@
 module github.com/rancher/compliance-operator
 
-go 1.26.9
+go 1.26.10
 
 replace golang.org/x/tools => golang.org/x/tools v0.37.0
 
