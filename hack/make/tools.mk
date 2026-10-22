@@ -9,11 +9,15 @@ ifeq ($(OS_ARCH),aarch64)
 	OS_ARCH = arm64
 endif
 
+# BCI-based CI images ship sha256sum but not shasum (perl), while macOS
+# ships shasum by default.
+SHA256SUM ?= $(shell command -v sha256sum >/dev/null 2>&1 && echo sha256sum -c - || echo shasum -a 256 -c -)
+
 K3D = $(TOOLS_BIN)/k3d-$(K3D_VERSION)
 $(K3D):
 	rm -f $(TOOLS_BIN)/k3d*
 	curl -sSfL -o $(K3D) "https://github.com/k3d-io/k3d/releases/download/$(K3D_VERSION)/k3d-$(OS_NAME)-$(OS_ARCH)"
-	echo "$(K3D_SUM_$(OS_ARCH))  $(K3D)" | shasum -a 256 -c -
+	echo "$(K3D_SUM_$(OS_ARCH))  $(K3D)" | $(SHA256SUM)
 	chmod u+x $(K3D)
 
 GOLANGCI = $(TOOLS_BIN)/golangci-lint-$(GOLANGCI_VERSION)
@@ -22,7 +26,7 @@ $(GOLANGCI):
 	rm -rf $(TOOLS_BIN)/golangci*
 	curl -sSfL -o $(TOOLS_BIN)/golangci.tar.gz \
 		"https://github.com/golangci/golangci-lint/releases/download/$(GOLANGCI_VERSION)/golangci-lint-$(GOLANGCI_VERSION_TRIMMED)-$(OS_NAME)-$(OS_ARCH).tar.gz"
-	echo "$(GOLANGCI_SUM_$(OS_ARCH))  $(TOOLS_BIN)/golangci.tar.gz" | shasum -a 256 -c -
+	echo "$(GOLANGCI_SUM_$(OS_ARCH))  $(TOOLS_BIN)/golangci.tar.gz" | $(SHA256SUM)
 	tar -xf $(TOOLS_BIN)/golangci.tar.gz -C $(TOOLS_BIN)
 	mv $(TOOLS_BIN)/golangci-lint-$(GOLANGCI_VERSION_TRIMMED)-$(OS_NAME)-$(OS_ARCH)/golangci-lint $(GOLANGCI)
 	chmod u+x $(GOLANGCI)
@@ -34,7 +38,7 @@ $(KUBECTL):
 	rm -f $(TOOLS_BIN)/kubectl*
 	curl -sSfL -o $(KUBECTL) \
 		"https://dl.k8s.io/release/$(KUBECTL_VERSION)/bin/$(OS_NAME)/$(OS_ARCH)/kubectl"
-	echo "$(KUBECTL_SUM_$(OS_ARCH))  $(KUBECTL)" | shasum -a 256 -c -
+	echo "$(KUBECTL_SUM_$(OS_ARCH))  $(KUBECTL)" | $(SHA256SUM)
 	chmod u+x $(KUBECTL)
 
 HELM = $(TOOLS_BIN)/helm-$(HELM_VERSION)
@@ -43,7 +47,7 @@ $(HELM):
 	mkdir -p $(TOOLS_BIN)/tmp-helm
 	curl -sSfL -o $(TOOLS_BIN)/helm.tar.gz \
 		"https://get.helm.sh/helm-$(HELM_VERSION)-$(OS_NAME)-$(OS_ARCH).tar.gz"
-	echo "$(HELM_CHECKSUM_$(OS_ARCH))  $(TOOLS_BIN)/helm.tar.gz" | shasum -a 256 -c -
+	echo "$(HELM_CHECKSUM_$(OS_ARCH))  $(TOOLS_BIN)/helm.tar.gz" | $(SHA256SUM)
 	tar -xf $(TOOLS_BIN)/helm.tar.gz --strip-components 1 -C $(TOOLS_BIN)/tmp-helm
 	mv $(TOOLS_BIN)/tmp-helm/helm $(HELM)
 	chmod u+x $(HELM)

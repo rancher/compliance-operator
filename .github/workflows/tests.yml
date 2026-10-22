@@ -9,25 +9,34 @@ permissions:
 
 jobs:
   validate:
-    runs-on: ubuntu-latest
+    runs-on: org-${{ github.repository_owner_id }}-amd64-k8s
+    container: ghcr.io/rancher/ci-image/go1.27 # zizmor: ignore[unpinned-images] -- internal image is exempt from this rule
     steps:
     - name: Checkout code
       uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
-    - name: Install Go
-      uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
-      with:
-        go-version-file: 'go.mod'
     - run: make validate
 
   test:
+    runs-on: org-${{ github.repository_owner_id }}-amd64-k8s
+    container: ghcr.io/rancher/ci-image/go1.27 # zizmor: ignore[unpinned-images] -- internal image is exempt from this rule
+    needs: [ validate ]
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+
+    - run: make test
+
+  test-cross-platform:
     strategy:
       fail-fast: false
       matrix:
-        # Run tests across all platforms, to ensure developers
-        # can use any environment to run basic tests.
-        platform: [ubuntu-latest, windows-latest, macos-latest]
-    
+        # Run tests on non-Linux platforms, to ensure developers can use
+        # any environment to run basic tests. There are no self-hosted
+        # Windows/macOS runners, so these remain on GitHub-hosted runners.
+        platform: [windows-latest, macos-latest]
+
     runs-on: ${{ matrix.platform }}
     needs: [ validate ]
 
@@ -39,26 +48,15 @@ jobs:
       uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
       with:
         go-version-file: 'go.mod'
-  
+
     - run: make test
 
   e2e:
-    strategy:
-      fail-fast: false
-      matrix:
-        # Works on macos-12, but takes a very long time to run so this
-        # is currently disabled.
-        platform: [ubuntu-latest]
-  
-    runs-on: ${{ matrix.platform }}
+    # Requires a Docker daemon, so it runs on a non-containerized runner.
+    runs-on: runs-on,runner=4cpu-linux-x64,image=ubuntu22-full-x64,run-id=${{ github.run_id }}
     needs: [ validate ]
 
     steps:
-    - name: Setup docker (MacOS only)
-      if: runner.os == 'macos'
-      run: |
-        brew install docker
-        colima start
     - name: Setup QEMU
       uses: docker/setup-qemu-action@99012661954931238ded8c8b007157a8430204e1 # v4.4.0
     - name: Setup Docker Buildx
