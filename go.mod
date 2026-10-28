@@ -10,7 +10,7 @@ require (
 	github.com/rancher/kubernetes-provider-detector v0.1.5
 	github.com/rancher/lasso v0.2.10
 	github.com/rancher/security-scan v0.11.0-rc.1
-	github.com/rancher/wrangler/v3 v3.8.0-rc.2
+	github.com/rancher/wrangler/v3 v3.8.0-rc.3
 	github.com/robfig/cron v1.2.0
 	github.com/sirupsen/logrus v1.10.2
 	github.com/urfave/cli/v3 v3.10.1
