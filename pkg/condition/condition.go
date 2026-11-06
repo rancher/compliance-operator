@@ -230,7 +230,7 @@ func getValue(obj interface{}, name ...string) reflect.Value {
 	}
 	v := reflect.ValueOf(obj)
 	t := v.Type()
-	if t.Kind() == reflect.Ptr {
+	if t.Kind() == reflect.Pointer {
 		v = v.Elem()
 		t = v.Type()
 	}
