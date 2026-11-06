@@ -13,11 +13,11 @@ K3D_SUM_amd64 := dbaa79a76ace7f4ca230a1ff41dc7d8a5036a8ad0309e9c54f9bf3836dbe853
 K3D_SUM_arm64 := 0b8110f2229631af7402fb828259330985918b08fefd38b7f1b788a1c8687216
 
 # renovate: datasource=github-releases packageName=kubernetes/kubernetes
-KUBECTL_VERSION = v1.35.9
-# renovate: datasource=github-releases packageName=kubernetes/kubernetes digestVersion=v1.35.9
-KUBECTL_SUM_amd64 := 3cfeaf80be482b435b0aa214aff6e0b2c312ee23c0ff20810c75517b6004c6eb
-# renovate: datasource=github-releases packageName=kubernetes/kubernetes digestVersion=v1.35.9
-KUBECTL_SUM_arm64 := 39c98bca82875d9a9ddfb6f3c5ab17c3f78ea0801230683e538a67d5c053308d
+KUBECTL_VERSION = v1.35.10
+# renovate: datasource=github-releases packageName=kubernetes/kubernetes digestVersion=v1.35.10
+KUBECTL_SUM_amd64 := c49a28f1f4efc4d475ed05f47f2ce8e563bf7bef69ed77fe1b924ea6d83b6327
+# renovate: datasource=github-releases packageName=kubernetes/kubernetes digestVersion=v1.35.10
+KUBECTL_SUM_arm64 := 283f1be6a46b3695b625e25030106b8ffe18bd0d3a900f5b65c259ca407f04f5
 
 # renovate: datasource=github-release-attachments depName=helm/helm
 HELM_VERSION = v4.1.0
