@@ -19,7 +19,7 @@ annotations:
     - name: sonobuoy
       image: rancher/mirrored-sonobuoy-sonobuoy:v0.57.5
     - name: kuberlr-kubectl
-      image: rancher/kuberlr-kubectl:v9.0.1
+      image: rancher/kuberlr-kubectl:v9.0.2
 apiVersion: v1
 appVersion: v1.6.0-rc.7
 description: The compliance-operator enables running security scans on a kubernetes
