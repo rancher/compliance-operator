@@ -32,6 +32,5 @@ data:
             "timeoutseconds": 5400
         },
         "Namespace": "{{.namespace}}",
-        "WorkerImage": "{{.sonobuoyImage}}",
-        "Version": "{{.sonobuoyVersion}}"
+        "WorkerImage": "{{.workerImage}}"
     }

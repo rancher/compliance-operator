@@ -40,8 +40,9 @@ func NewConfigMaps(clusterscan *operatorapiv1.ClusterScan, clusterscanprofile *o
 		"runName":          name.SafeConcatName("security-scan-runner", clusterscan.Name),
 		"appName":          "rancher-compliance",
 		"advertiseAddress": operatorapiv1.ClusterScanService,
-		"sonobuoyImage":    imageConfig.SonobuoyImage + ":" + imageConfig.SonobuoyImageTag,
-		"sonobuoyVersion":  imageConfig.SonobuoyImageTag,
+		// security-scan ships the sonobuoy binary at /sonobuoy, so it is also
+		// used as the image of the Sonobuoy worker sidecar.
+		"workerImage": imageConfig.SecurityScanImage + ":" + imageConfig.SecurityScanImageTag,
 	}
 	configcm, err := generateConfigMap(clusterscan, "scanConfig.template", scanConfigTemplate, configdata)
 	if err != nil {
