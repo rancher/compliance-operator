@@ -157,8 +157,6 @@ type ClusterScanReportSpec struct {
 type ScanImageConfig struct {
 	SecurityScanImage    string
 	SecurityScanImageTag string
-	SonobuoyImage        string
-	SonobuoyImageTag     string
 	AlertSeverity        string
 	ClusterName          string
 	AlertEnabled         bool
