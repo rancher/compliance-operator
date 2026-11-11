@@ -12,7 +12,6 @@ export ARCH="${ARCH:-amd64}"
 export IMAGE="${IMAGE}"
 
 export SECURITY_SCAN_IMAGE="$(yq .image.securityScan.repository < ./chart/values.yaml):$(yq .image.securityScan.tag < ./chart/values.yaml)"
-export SONOBUOY_IMAGE="$(yq .image.sonobuoy.repository < ./chart/values.yaml):$(yq .image.sonobuoy.tag < ./chart/values.yaml)"
 
 CLUSTER_NAME="compliance-op-e2e-${RANDOM}"
 E2E_TIMEOUT_SECONDS=200
@@ -60,7 +59,6 @@ echo "> Import ${IMAGE} into cluster"
 ${K3D} image import "${IMAGE}" -c "${CLUSTER_NAME}"
 
 pull_image "${SECURITY_SCAN_IMAGE}"
-pull_image "${SONOBUOY_IMAGE}"
 
 # compliance-operator may have intermittent issues if key components
 # from the cluster aren't ready.
