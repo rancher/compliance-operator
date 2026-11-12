@@ -9,7 +9,7 @@ require (
 	github.com/prometheus/client_golang v1.24.1
 	github.com/rancher/kubernetes-provider-detector v0.1.5
 	github.com/rancher/lasso v0.2.10
-	github.com/rancher/security-scan v0.11.0-rc.4
+	github.com/rancher/security-scan v0.11.0-rc.5
 	github.com/rancher/wrangler/v3 v3.8.0-rc.2
 	github.com/robfig/cron v1.2.0
 	github.com/sirupsen/logrus v1.10.2
