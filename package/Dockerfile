@@ -28,7 +28,7 @@ RUN printf "root:x:0:0:root:/root:/usr/bin/false\nnobody:x:65534:65534:nobody:/v
 # Builds with the Go compiler from the AppCo Go image, as recommended by
 # RFD 0070. Pinned to MAJOR.MINOR.PATCH, matching go.mod, so the toolchain
 # is deterministic and bumped by Renovate.
-FROM --platform=$BUILDPLATFORM registry.suse.com/rancher/appco-go:1.27.3 AS builder
+FROM --platform=$BUILDPLATFORM registry.suse.com/rancher/appco-go:1.27.4 AS builder
 
 COPY --from=tools /chroot /
 
