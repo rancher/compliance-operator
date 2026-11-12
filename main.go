@@ -48,8 +48,6 @@ var (
 	debug                         bool
 	securityScanImage             string
 	securityScanImageTag          string
-	sonobuoyImage                 string
-	sonobuoyImageTag              string
 	clusterName                   string
 	securityScanJobTolerationsVal string
 )
@@ -88,18 +86,6 @@ func main() {
 				Sources:     cli.EnvVars("SECURITY_SCAN_IMAGE_TAG"),
 				Value:       "latest",
 				Destination: &securityScanImageTag,
-			},
-			&cli.StringFlag{
-				Name:        "sonobuoy-image",
-				Sources:     cli.EnvVars("SONOBUOY_IMAGE"),
-				Value:       "rancher/sonobuoy-sonobuoy",
-				Destination: &sonobuoyImage,
-			},
-			&cli.StringFlag{
-				Name:        "sonobuoy-image-tag",
-				Sources:     cli.EnvVars("SONOBUOY_IMAGE_TAG"),
-				Value:       "latest",
-				Destination: &sonobuoyImageTag,
 			},
 			&cli.StringFlag{
 				Name:        "metrics_port",
@@ -159,8 +145,6 @@ func run(ctx context.Context, c *cli.Command) error {
 	threads = c.Int("threads")
 	securityScanImage = c.String("security-scan-image")
 	securityScanImageTag = c.String("security-scan-image-tag")
-	sonobuoyImage = c.String("sonobuoy-image")
-	sonobuoyImageTag = c.String("sonobuoy-image-tag")
 	name = c.String("name")
 
 	securityScanJobTolerations := []corev1.Toleration{{
@@ -184,8 +168,6 @@ func run(ctx context.Context, c *cli.Command) error {
 	imgConfig := &operatorapiv1.ScanImageConfig{
 		SecurityScanImage:    securityScanImage,
 		SecurityScanImageTag: securityScanImageTag,
-		SonobuoyImage:        sonobuoyImage,
-		SonobuoyImageTag:     sonobuoyImageTag,
 		AlertSeverity:        alertSeverity,
 		ClusterName:          clusterName,
 		AlertEnabled:         c.Bool("alertEnabled"),
@@ -218,9 +200,6 @@ func run(ctx context.Context, c *cli.Command) error {
 func validateConfig(imgConfig *operatorapiv1.ScanImageConfig) error {
 	if imgConfig.SecurityScanImage == "" {
 		return errors.New("No Security-Scan Image specified")
-	}
-	if imgConfig.SonobuoyImage == "" {
-		return errors.New("No Sonobuoy tool Image specified")
 	}
 	return nil
 }
