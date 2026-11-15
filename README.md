@@ -2,6 +2,7 @@
 
 The compliance-operator enables running Compliance security scans on a Kubernetes cluster and generate compliance reports that can be downloaded.
 Benchmarks tests and the execution logic lives on [rancher/security-scan].
+The `rancher/security-scan` image is also used as the [Sonobuoy](https://github.com/vmware-tanzu/sonobuoy) worker image, so the `rancher/mirrored-sonobuoy-sonobuoy` image is no longer used.
 
 ## Building
 
