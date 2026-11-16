@@ -43,6 +43,14 @@ Follow these guidelines when releasing new branches:
 1. Name convention to be used: `release/v1.x.x`.
 2. Update the [Branch and Releases](https://github.com/rancher/compliance-operator#branches-and-releases) table with the new branches and remove the no longer needed branches.
 
+### Chart releases (charts v2)
+Pushing a `v*` tag also runs the [Stage chart](.github/workflows/stage-chart.yaml) workflow, which
+stages the `rancher-compliance` and `rancher-compliance-crd` charts in the staging registry with
+[cargueiro](https://github.com/rancher/cargueiro/blob/main/docs/CHART_OWNER.md) and opens a pull
+request against the `staging` branch of `rancher/charts`. The charts come from `chart/` and `crds/`,
+prepared by [prepare-charts.sh](.github/workflows/scripts/prepare-charts.sh); the chart version is
+worked out from the `catalog.cattle.io/rancher-version` annotation and the versions already released.
+
 ## License
 Copyright (c) 2025 SUSE LLC.
 
