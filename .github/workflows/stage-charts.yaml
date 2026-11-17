@@ -1,0 +1,69 @@
+name: Stage the charts in the Rancher catalog
+
+# Sends rancher-compliance and rancher-compliance-crd of a release to the staging registry of
+# the Rancher catalog and has rancher/charts ship them: the two charts are made from chart/ and
+# crds/ at the tag, stamped with their final version, checked against the catalog rules,
+# packaged and pushed to stgregistry.suse.com/rancher/catalog, and rancher/charts opens a pull
+# request with them against its staging branch.
+#
+# Run it by hand, from the default branch, naming the tag to stage:
+#
+#   gh workflow run stage-charts.yaml --repo rancher/compliance-operator --ref main -f tag=v1.6.0-rc.9
+#
+# It is additive: release.yml is not touched.
+#
+# The final version, 1XY.Z.W+upA.B.C, is worked out from the appVersion of chart/Chart.yaml
+# and the versions already released. The catalog checks need both bounds in
+# catalog.cattle.io/rancher-version and catalog.cattle.io/kube-version of that Chart.yaml,
+# which this workflow does not change: the action fails before it pushes anything when they
+# are not right.
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "The tag to stage, such as v1.6.0-rc.9"
+        required: true
+        type: string
+
+permissions: {}
+
+# Two runs of the same tag could push at the same time, and the check that the version is not
+# in the registry yet and the push are two calls. A second run waits.
+concurrency:
+  group: stage-compliance-${{ inputs.tag }}
+  cancel-in-progress: false
+
+jobs:
+  stage-charts:
+    name: Stage the charts
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write # to log in to Vault with the OIDC token
+    steps:
+      # The script of the default branch, and the charts of the tag.
+      - name: Checkout the workflow
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+
+      - name: Checkout the release
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: ${{ inputs.tag }}
+          path: release
+          persist-credentials: false
+
+      - name: Prepare the charts
+        run: .github/workflows/scripts/prepare-charts.sh release "$RUNNER_TEMP/charts"
+
+      # The version is worked out by cargueiro from the appVersion and the versions that are
+      # already released.
+      - name: Stamp, check, package and push the charts, and start the shipping
+        uses: rancher/charts/.github/actions/ship-family-staged@chart-owners
+        with:
+          family: rancher-compliance
+          chart-dirs: |
+            ${{ runner.temp }}/charts/rancher-compliance
+            ${{ runner.temp }}/charts/rancher-compliance-crd
