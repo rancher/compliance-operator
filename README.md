@@ -44,7 +44,7 @@ Follow these guidelines when releasing new branches:
 2. Update the [Branch and Releases](https://github.com/rancher/compliance-operator#branches-and-releases) table with the new branches and remove the no longer needed branches.
 
 ### Chart releases (charts v2)
-Pushing a `v*` tag also runs the [Stage chart](.github/workflows/stage-chart.yaml) workflow, which
+Running the [Stage chart](.github/workflows/stage-chart.yaml) workflow by hand on a `v*` tag
 stages the `rancher-compliance` and `rancher-compliance-crd` charts in the staging registry with
 [cargueiro](https://github.com/rancher/cargueiro/blob/main/docs/CHART_OWNER.md) and opens a pull
 request against the `staging` branch of `rancher/charts`. The charts come from

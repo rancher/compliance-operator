@@ -17,9 +17,6 @@ name: Stage chart
 # which holds only the shared actions, so it moves only when they change.
 
 on:
-  push:
-    tags:
-      - 'v*'
   workflow_dispatch:
 
 permissions: {}
