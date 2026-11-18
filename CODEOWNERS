@@ -9,5 +9,4 @@
 /tests/              @rancher/infracloud-team @rancher/rancher-security
 
 # rancher-compliance chart Ownership
-/chart/              @rancher/infracloud-team @rancher/rancher-security
-/crds/               @rancher/infracloud-team @rancher/rancher-security
+/charts/             @rancher/infracloud-team @rancher/rancher-security

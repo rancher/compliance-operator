@@ -11,7 +11,7 @@ export K3D="${K3D:-k3d}"
 export ARCH="${ARCH:-amd64}"
 export IMAGE="${IMAGE}"
 
-export SECURITY_SCAN_IMAGE="$(yq .image.securityScan.repository < ./chart/values.yaml):$(yq .image.securityScan.tag < ./chart/values.yaml)"
+export SECURITY_SCAN_IMAGE="$(yq .image.securityScan.repository < ./charts/rancher-compliance/values.yaml):$(yq .image.securityScan.tag < ./charts/rancher-compliance/values.yaml)"
 
 CLUSTER_NAME="compliance-op-e2e-${RANDOM}"
 E2E_TIMEOUT_SECONDS=200
@@ -68,13 +68,13 @@ ${KUBECTL} wait --timeout=60s --for=condition=ready -n kube-system pod -l app=lo
 ${KUBECTL} wait --timeout=60s --for=condition=ready -n kube-system pod -l k8s-app=kube-dns
 
 echo "> Deploying compliance-operator"
-${KUBECTL} apply -f ./crds
+${KUBECTL} apply -f ./charts/rancher-compliance-crd/templates
 
 ${HELM} install --create-namespace --namespace compliance-operator-system \
   --set "image.operator.repository=${IMAGE%%:*}" \
   --set "image.operator.tag=${IMAGE#*:}" \
   --set "debug=true" \
-  rancher-compliance ./chart
+  rancher-compliance ./charts/rancher-compliance
 
 echo "> Wait for compliance-operator to be ready"
 # Can't kubectl wait before the deployment schedules the pod, so
