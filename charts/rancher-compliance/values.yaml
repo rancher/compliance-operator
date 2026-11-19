@@ -45,7 +45,7 @@ global:
     imagePullSecrets: []
   kubectl:
     repository: rancher/kuberlr-kubectl
-    tag: v9.0.2
+    tag: v9.0.4
 
 alerts:
   enabled: false

@@ -36,7 +36,7 @@ func WriteCRD() error {
 			return err
 		}
 
-		filename := fmt.Sprintf("./crds/%s.yaml", strings.ToLower(crd.Spec.Names.Kind))
+		filename := fmt.Sprintf("./charts/rancher-compliance-crd/templates/%s.yaml", strings.ToLower(crd.Spec.Names.Kind))
 		err = os.WriteFile(filename, yamlBytes, 0o600)
 		if err != nil {
 			return err
