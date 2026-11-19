@@ -45,7 +45,7 @@ global:
     clusterName: ""
   kubectl:
     repository: rancher/kuberlr-kubectl
-    tag: v6.2.1
+    tag: v6.2.2
 
 alerts:
   enabled: false
