@@ -49,6 +49,11 @@ push-image: buildx-machine ## build the container image targeting all platforms 
 		--build-arg VERSION=$(VERSION) --platform=$(TARGET_PLATFORMS) -t "$(IMAGE)" --push .
 	@echo "Pushed $(IMAGE)"
 
+.PHONY: push-prime-image
+push-prime-image: ## build and push the Prime image with SBOM and provenance attestations.
+	BUILDX_ARGS="--sbom=true --attest type=provenance,mode=max" \
+	$(MAKE) push-image
+
 e2e: $(K3D) $(KUBECTL) $(HELM) build-image ## Run E2E tests.
 	K3D=$(K3D) KUBECTL=$(KUBECTL) HELM=$(HELM) VERSION=$(VERSION) \
 	IMAGE=$(IMAGE) \
