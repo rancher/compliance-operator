@@ -20,8 +20,8 @@ KUBECTL_SUM_arm64 := ff749f4b78d9c4f1ec87307df9b50119ed819e2094aa9810cb9acffc328
 KUBECTL_SUM_amd64 := 65691ff77eb6fa44c908b77a1082c9f092c3b9733b5cefabec0d1104890e21a8
 
 # renovate-local: helm-amd64
-HELM_VERSION = v4.3.0
-# renovate-local: helm-amd64=v4.3.0
-HELM_CHECKSUM_amd64 := 86584a54def73570558f66f5111cc53dfed56689637ae32c1201205d494f54fb
-# renovate-local: helm-arm64=v4.3.0
-HELM_CHECKSUM_arm64 := 31c5794dd55c66a51e6b7d2e2ac7a114ae8b1de41ff1d9ba51748ac973b06a08
+HELM_VERSION = v4.3.2
+# renovate-local: helm-amd64=v4.3.2
+HELM_CHECKSUM_amd64 := d1c0278d46beab79582d7e50f5b3dc206944ba8e577cde618513fd07daa53983
+# renovate-local: helm-arm64=v4.3.2
+HELM_CHECKSUM_arm64 := df31cb61680ef728f82c770e5280dd565617bee6b039d37e85c677288be4bbb0
